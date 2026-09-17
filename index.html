@@ -298,7 +298,12 @@
 (function () {
   var intro = document.getElementById('intro');
   if (!intro) return;
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  var skipIntro = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (new URLSearchParams(location.search).has('intro-skip')) {
+    skipIntro = true;
+    history.replaceState(null, '', location.pathname + location.hash);
+  }
+  if (skipIntro) {
     intro.remove();
     return;
   }
