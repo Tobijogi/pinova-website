@@ -157,6 +157,38 @@
     .logo-anim, .logo-anim path, .fade-up { animation: none; }
   }
 
+  /* Intro splash: mark rotates forward out of black, then the wordmark crossfades in,
+     then the whole overlay fades away to reveal the page. */
+  .intro {
+    position: fixed; inset: 0; z-index: 9999;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
+    background: #05090c;
+    animation: introOut .6s ease 2.1s forwards;
+  }
+  .intro-mark {
+    width: clamp(130px, 24vw, 200px); height: auto; color: var(--mint);
+    opacity: 0;
+    animation: introMarkIn 1.1s cubic-bezier(.22,.9,.32,1) .15s forwards;
+  }
+  .intro-word {
+    display: flex; gap: .35em;
+    font: 600 1.3rem/1 'Poppins', system-ui, sans-serif; letter-spacing: .16em; color: var(--on-slate);
+    opacity: 0; transform: scale(.92);
+    animation: introWordIn .7s ease .9s forwards;
+  }
+  .intro-word .lab { color: var(--mint); font-weight: 500; }
+  @keyframes introMarkIn {
+    0% { opacity: 0; transform: perspective(700px) translateZ(-420px) rotateY(-130deg) rotate(-35deg) scale(.35); }
+    65% { opacity: 1; }
+    100% { opacity: 1; transform: perspective(700px) translateZ(0) rotateY(0deg) rotate(0deg) scale(1); }
+  }
+  @keyframes introWordIn { from { opacity: 0; transform: scale(.92); } to { opacity: 1; transform: scale(1); } }
+  @keyframes introOut { to { opacity: 0; visibility: hidden; pointer-events: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .intro { animation: none; opacity: 0; visibility: hidden; pointer-events: none; }
+    .intro-mark, .intro-word { animation: none; opacity: 1; transform: none; }
+  }
+
   /* Facts strip */
   .facts { background: var(--surface); border-bottom: 1px solid var(--line); }
   .facts .wrap { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; }
@@ -253,6 +285,30 @@
     </g>
   </symbol>
 </svg>
+
+<div class="intro" id="intro" aria-hidden="true">
+  <svg class="intro-mark" viewBox="-6 -6 232 222"><use href="#pinova-mark"/></svg>
+  <div class="intro-word"><span>PINOVA</span><span class="lab">LAB</span></div>
+</div>
+<script>
+(function () {
+  var intro = document.getElementById('intro');
+  if (!intro) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    intro.remove();
+    return;
+  }
+  document.documentElement.style.overflow = 'hidden';
+  function reveal() {
+    document.documentElement.style.overflow = '';
+    if (intro.parentNode) intro.parentNode.removeChild(intro);
+  }
+  intro.addEventListener('animationend', function (e) {
+    if (e.animationName === 'introOut') reveal();
+  });
+  setTimeout(reveal, 3200);
+})();
+</script>
 
 <a class="skip" href="#main">Zum Inhalt springen</a>
 
