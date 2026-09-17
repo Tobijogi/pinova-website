@@ -1,8 +1,3 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pinova Lab – PivotPin & Zahntech-Lösungen</title>
 <meta name="description" content="TL² PivotPin von Pinova Lab: verbindet 3D-gedruckte SHERA-Modelle stabil mit Sockelgips, spart Harz und ist auch mit exocad-Modellen nutzbar. Kostenlose Musterpackung für Dentallabore.">
 <meta property="og:title" content="Pinova Lab – TL² PivotPin">
@@ -217,6 +212,7 @@
   .price small { font: 400 .8rem 'Inter', sans-serif; color: var(--ink-soft); }
   .link-btn { font-weight: 600; text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; }
   .link-btn:hover { text-decoration: underline; }
+  .link-btn-3d { color: var(--mint-ink); font-size: .9rem; min-height: 0; margin-top: -4px; }
 
   /* How it works */
   .how { background: var(--surface); border-block: 1px solid var(--line); }
@@ -235,6 +231,16 @@
   .faq summary::after { content: "+"; position: absolute; right: 18px; top: 50%; transform: translateY(-50%); font: 500 1.4rem 'Poppins', sans-serif; color: var(--mint-ink); }
   .faq details[open] summary::after { content: "–"; }
   .faq details p { padding: 0 18px 18px; color: var(--ink-soft); }
+
+  /* Legal (Impressum / Datenschutz) */
+  section.legal { padding-block: 20px; border-top: 1px solid var(--line); }
+  .legal .wrap { max-width: 760px; }
+  .legal .section-head { margin-bottom: 10px; }
+  .legal .section-head h2 { font-size: .78rem; color: var(--ink-soft); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+  .legal h3 { font-size: .72rem; margin: 10px 0 3px; }
+  .legal h3:first-child { margin-top: 0; }
+  .legal p { color: var(--ink-soft); font-size: .7rem; line-height: 1.5; margin-bottom: 5px; }
+  .legal a { color: var(--mint-ink); }
 
   /* Sample request */
   .sample { background: linear-gradient(135deg, var(--slate-a), var(--slate-b)); color: var(--on-slate); border-radius: 16px; padding: 40px; display: grid; grid-template-columns: 1fr 1.1fr; gap: 40px; }
@@ -274,8 +280,6 @@
     section.block { padding-block: 52px; }
   }
 </style>
-</head>
-<body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="pinova-mark" viewBox="-6 -6 232 222">
@@ -321,6 +325,7 @@
     <nav class="nav" aria-label="Hauptnavigation">
       <a href="#produkte">Produkte</a>
       <a href="#funktion">So funktioniert's</a>
+      <a href="3d/pivotpin-3d.html" target="_blank" rel="noopener">3D-Ansicht ↗</a>
       <a href="#faq">FAQ</a>
       <a class="nav-cta" href="#muster">Muster anfordern</a>
     </nav>
@@ -381,6 +386,7 @@
               <li>Weniger Kunststoffverbrauch im Druck</li>
               <li>100 Stück pro Packung</li>
             </ul>
+            <a class="link-btn link-btn-3d" href="3d/pivotpin-3d.html" target="_blank" rel="noopener">↻ In 3D ansehen</a>
             <div class="meta">
               <span class="price">18,89 € <small>netto</small></span>
               <a class="link-btn" href="#muster">Muster anfordern →</a>
@@ -515,6 +521,52 @@
       </div>
     </div>
   </section>
+
+  <section class="block legal" id="impressum">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Impressum</h2>
+      </div>
+      <h3>Angaben gemäß § 5 TMG</h3>
+      <p>
+        Tobias Löw<br>
+        Johann-Sebastian-Bach-Str. 4<br>
+        85435 Erding
+      </p>
+      <h3>Kontakt</h3>
+      <p>
+        Telefon: +49 179 2251787<br>
+        E-Mail: <a href="mailto:info@tobias-loew.com">info@tobias-loew.com</a>
+      </p>
+      <h3>Umsatzsteuer-ID</h3>
+      <p>Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG: DE288904633</p>
+      <h3>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h3>
+      <p>Tobias Löw (Anschrift wie oben)</p>
+    </div>
+  </section>
+
+  <section class="block legal" id="datenschutz">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Datenschutzerklärung</h2>
+      </div>
+      <h3>1. Verantwortlicher</h3>
+      <p>
+        Tobias Löw, Johann-Sebastian-Bach-Str. 4, 85435 Erding<br>
+        E-Mail: <a href="mailto:info@tobias-loew.com">info@tobias-loew.com</a>
+      </p>
+      <h3>2. Hosting</h3>
+      <p>Diese Website wird über GitHub Pages (GitHub Inc./GitHub B.V.) gehostet. Beim Aufruf der Seite verarbeitet GitHub automatisch technische Daten (u. a. IP-Adresse, Datum und Uhrzeit des Zugriffs, angeforderte Datei) in sogenannten Server-Logfiles, um die Website technisch auszuliefern und die Sicherheit zu gewährleisten (Art. 6 Abs. 1 lit. f DSGVO). Weitere Informationen: <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">GitHub Privacy Statement</a>.</p>
+      <h3>3. Google Fonts</h3>
+      <p>Diese Seite bindet Schriftarten von Google Fonts ein, die dazu von Servern von Google geladen werden. Dabei wird die IP-Adresse Ihres Endgeräts an Google übertragen. Rechtsgrundlage ist unser berechtigtes Interesse an einer technisch stabilen und einheitlichen Darstellung der Seite (Art. 6 Abs. 1 lit. f DSGVO).</p>
+      <h3>4. Musteranfrage-Formular</h3>
+      <p>Das Formular „Kostenlose Musterpackung anfordern" ist derzeit eine Vorschau und noch nicht mit einem Postfach oder Server verbunden – eingegebene Daten werden aktuell nicht übertragen oder gespeichert. Sobald das Formular aktiv geschaltet wird, werden die eingegebenen Daten (Laborname, E-Mail-Adresse, optionale Nachricht) ausschließlich zur Bearbeitung Ihrer Anfrage verwendet (Art. 6 Abs. 1 lit. b DSGVO) und nicht an Dritte weitergegeben. Diese Erklärung wird dann entsprechend aktualisiert.</p>
+      <h3>5. Cookies und Tracking</h3>
+      <p>Diese Website verwendet aktuell keine Cookies und keine Analyse- oder Tracking-Tools.</p>
+      <h3>6. Ihre Rechte</h3>
+      <p>Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch bezüglich Ihrer bei uns gespeicherten personenbezogenen Daten sowie das Recht auf Beschwerde bei einer Aufsichtsbehörde. Wenden Sie sich dazu an: <a href="mailto:info@tobias-loew.com">info@tobias-loew.com</a>.</p>
+    </div>
+  </section>
 </main>
 
 <footer>
@@ -524,8 +576,8 @@
       <span>PINOVA LAB</span>
     </a>
     <nav aria-label="Rechtliches">
-      <a href="#">Impressum</a>
-      <a href="#">Datenschutz</a>
+      <a href="#impressum">Impressum</a>
+      <a href="#datenschutz">Datenschutz</a>
       <a href="#muster">Kontakt</a>
     </nav>
     <span>© 2026 Pinova Lab</span>
@@ -548,5 +600,3 @@
     });
   })();
 </script>
-</body>
-</html>
