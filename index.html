@@ -268,6 +268,13 @@
   .form-note { font-size: .82rem; color: var(--on-slate-soft); }
   .form-status { font-weight: 500; color: var(--mint); }
 
+  dialog#muster { border: none; padding: 0; border-radius: 16px; max-width: min(440px, 92vw); background: transparent; margin: auto; }
+  dialog#muster::backdrop { background: rgba(10,16,20,.6); backdrop-filter: blur(2px); }
+  .muster-sample { grid-template-columns: 1fr; gap: 18px; padding: 32px 28px; position: relative; max-height: 85vh; overflow-y: auto; border-radius: 16px; }
+  .muster-sample h2 { font-size: 1.4rem; }
+  .dialog-close { position: absolute; top: 12px; right: 12px; width: 32px; height: 32px; border-radius: 50%; border: none; background: rgba(255,255,255,.12); color: var(--on-slate); font-size: 1.2rem; line-height: 1; cursor: pointer; }
+  .dialog-close:hover { background: rgba(255,255,255,.22); }
+
   /* Cart */
   .cart-empty { color: var(--ink-soft); padding: 8px 0 36px; }
   .cart-empty a { color: var(--mint-ink); font-weight: 600; }
@@ -557,34 +564,33 @@
     </div>
   </section>
 
-  <section class="block" id="muster" hidden>
-    <div class="wrap">
-      <div class="sample">
-        <div>
-          <h2>Kostenlose Musterpackung anfordern</h2>
-          <p>Testen Sie den PivotPin in Ihrem Labor. Wir melden uns persönlich bei Ihnen.</p>
-          <p style="margin-top:18px">E-Mail: <a href="mailto:info@tobias-loew.com" style="color:var(--mint)">info@tobias-loew.com</a></p>
-        </div>
-        <form class="form" id="sample-form" novalidate>
-          <div class="field">
-            <label for="f-lab">Labor</label>
-            <input id="f-lab" name="labor" autocomplete="organization" required>
-          </div>
-          <div class="field">
-            <label for="f-mail">E-Mail</label>
-            <input id="f-mail" name="email" type="email" autocomplete="email" required>
-          </div>
-          <div class="field">
-            <label for="f-msg">Nachricht (optional)</label>
-            <textarea id="f-msg" name="nachricht" placeholder="z. B. Drucker, Modellanzahl pro Woche"></textarea>
-          </div>
-          <button class="btn btn-mint" type="submit">Musterpackung anfordern</button>
-          <p class="form-note">Vorschau: Das Formular ist noch nicht mit einem Postfach verbunden.</p>
-          <p class="form-status" id="form-status" role="status" hidden></p>
-        </form>
+  <dialog id="muster">
+    <div class="sample muster-sample">
+      <button type="button" class="dialog-close" data-close-muster aria-label="Schließen">×</button>
+      <div>
+        <h2>Kostenlose Musterpackung anfordern</h2>
+        <p>Testen Sie den PivotPin in Ihrem Labor. Wir melden uns persönlich bei Ihnen.</p>
+        <p style="margin-top:18px">E-Mail: <a href="mailto:info@tobias-loew.com" style="color:var(--mint)">info@tobias-loew.com</a></p>
       </div>
+      <form class="form" id="sample-form" novalidate>
+        <div class="field">
+          <label for="f-lab">Labor</label>
+          <input id="f-lab" name="labor" autocomplete="organization" required>
+        </div>
+        <div class="field">
+          <label for="f-mail">E-Mail</label>
+          <input id="f-mail" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="f-msg">Nachricht (optional)</label>
+          <textarea id="f-msg" name="nachricht" placeholder="z. B. Drucker, Modellanzahl pro Woche"></textarea>
+        </div>
+        <button class="btn btn-mint" type="submit">Musterpackung anfordern</button>
+        <p class="form-note">Vorschau: Das Formular ist noch nicht mit einem Postfach verbunden.</p>
+        <p class="form-status" id="form-status" role="status" hidden></p>
+      </form>
     </div>
-  </section>
+  </dialog>
 
   <section class="block" id="warenkorb">
     <div class="wrap">
@@ -700,17 +706,21 @@
 
 <script>
   (function () {
-    var musterSection = document.getElementById('muster');
-    if (!musterSection) return;
+    var musterDialog = document.getElementById('muster');
+    if (!musterDialog || typeof musterDialog.showModal !== 'function') return;
     document.querySelectorAll('a[href="#muster"]').forEach(function (link) {
       link.addEventListener('click', function (e) {
         e.preventDefault();
-        musterSection.hidden = false;
-        musterSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        musterDialog.showModal();
         var firstField = document.getElementById('f-lab');
         if (firstField) firstField.focus({ preventScroll: true });
       });
     });
+    musterDialog.addEventListener('click', function (e) {
+      if (e.target === musterDialog) musterDialog.close();
+    });
+    var closeBtn = musterDialog.querySelector('[data-close-muster]');
+    if (closeBtn) closeBtn.addEventListener('click', function () { musterDialog.close(); });
   })();
 </script>
 
