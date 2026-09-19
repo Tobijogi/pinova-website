@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>exocad-Einrichtung für TL² PivotPin – Pinova Lab</title>
+<meta name="description" content="In 5 Schritten die Hexagon-Stützstruktur für TL² PivotPin exocad E01 im Model Creator einrichten – inklusive der entscheidenden 120 %-Skalierung.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --ink: #1f2d3d; --ink-soft: #4a5a6a; --ground: #f6f8f9; --surface: #ffffff;
+    --line: #e3e8eb; --mint: #6dd5d5; --mint-ink: #1d7f80; --mint-tint: #eafbfb;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #e6eef1; --ink-soft: #a6b6bd; --ground: #131b22; --surface: #1a232b;
+      --line: #2a343c; --mint-ink: #6dd5d5; --mint-tint: #16292a;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #e6eef1; --ink-soft: #a6b6bd; --ground: #131b22; --surface: #1a232b;
+    --line: #2a343c; --mint-ink: #6dd5d5; --mint-tint: #16292a;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font: 400 1rem/1.6 'Inter', system-ui, sans-serif; }
+  .wrap { max-width: 760px; margin-inline: auto; padding: 24px 20px 64px; }
+  .back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-soft); font: 500 .85rem 'Inter', sans-serif; text-decoration: none; margin-bottom: 18px; }
+  .back-link:hover { color: var(--mint-ink); text-decoration: underline; }
+  .eyebrow { font: 600 .78rem 'Poppins', sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--mint-ink); margin-bottom: 8px; }
+  h1 { font: 600 clamp(1.5rem, 3.2vw, 2rem)/1.25 'Poppins', system-ui, sans-serif; margin: 0 0 12px; text-wrap: balance; }
+  .intro { color: var(--ink-soft); max-width: 60ch; margin: 0 0 36px; }
+  .steps { display: grid; gap: 22px; counter-reset: s; margin: 0 0 32px; padding: 0; list-style: none; }
+  .step { counter-increment: s; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; display: grid; grid-template-columns: 40px 1fr; gap: 16px; align-items: start; }
+  .step::before {
+    content: counter(s); grid-column: 1; grid-row: 1;
+    display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%;
+    border: 2px solid var(--mint-ink); color: var(--mint-ink); font: 600 1.05rem 'Poppins', sans-serif;
+  }
+  .step-body { grid-column: 2; grid-row: 1; display: grid; gap: 10px; }
+  .step h2 { font-size: 1.05rem; margin: 0; }
+  .step p { margin: 0; color: var(--ink-soft); font-size: .95rem; }
+  .step.key { border-color: var(--mint-ink); background: var(--mint-tint); }
+  .key-tag { display: inline-block; margin-top: 10px; font: 600 .8rem 'Poppins', sans-serif; color: var(--mint-ink); background: var(--surface); border: 1px solid var(--mint-ink); border-radius: 999px; padding: 4px 12px; }
+  .note { font-size: .88rem; color: var(--ink-soft); background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; margin: 0 0 32px; }
+  .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding-top: 8px; border-top: 1px solid var(--line); }
+  .cta p { margin: 0; color: var(--ink-soft); font-size: .95rem; }
+  .btn { font: 600 .95rem 'Poppins', sans-serif; text-decoration: none; color: #0b2a2a; background: var(--mint); padding: 12px 22px; border-radius: 999px; display: inline-flex; align-items: center; }
+  .btn:hover { filter: brightness(.95); }
+  @media (max-width: 560px) {
+    .step { grid-template-columns: 36px 1fr; padding: 16px 16px; }
+    .step::before { width: 36px; height: 36px; font-size: .95rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="../index.html?intro-skip=1#produkte" class="back-link">&larr; Zur&uuml;ck zu Pinova Lab</a>
+  <p class="eyebrow">TL² PivotPin exocad E01</p>
+  <h1>Hexagon-Stützstruktur in 5 Schritten einrichten</h1>
+  <p class="intro">Solange TL² PivotPin noch nicht als offizielle Systemvoreinstellung in exocad hinterlegt ist, richten Sie die passende Stützstruktur im Model Creator manuell ein – einmal eingestellt, speichert exocad die Voreinstellung für alle weiteren Fälle. Das Ganze dauert zwei bis drei Minuten.</p>
+
+  <ol class="steps">
+    <li class="step">
+      <div class="step-body">
+        <h2>Hohles Modell anlegen</h2>
+        <p>Im Model Creator auf „Modell ohne Basisplatte" klicken. Im Reiter Einstellungen Ihr SHERA-Druckerpreset wählen (z.&nbsp;B. SHERAprint 20), „Hohles Modell" aktivieren (Wandstärke 2,5&nbsp;mm) und die Sockelhöhe auf 0&nbsp;mm stellen – die Basis übernimmt später TL² PivotPin mit Sockelgips. Mit „Modell erstellen" bestätigen.</p>
+      </div>
+    </li>
+    <li class="step">
+      <div class="step-body">
+        <h2>Stützstruktur hinzufügen</h2>
+        <p>Über „Attachments hinzufügen" in der Werkzeugleiste das Attachment „3D Print – Support structure for hollow model" aus dem Dropdown auswählen.</p>
+      </div>
+    </li>
+    <li class="step key">
+      <div class="step-body">
+        <h2>Auf 120 % skalieren</h2>
+        <p>Den Regler „Scale" von 100 % auf 120 % ziehen. Das ist der entscheidende Schritt: Erst bei 120 % passt die Hexagon-Stützstruktur exakt auf die Maße von TL² PivotPin.</p>
+        <span class="key-tag">Kernschritt: Scale = 120 %</span>
+        <p>Hinweis: Der Scale-Wert wird pro Fall neu gesetzt – bei jedem neuen Patientenfall steht der Regler wieder auf 100 %. Dieser Schritt muss also aktuell bei jedem Fall erneut ausgeführt werden, bis TL² PivotPin fest als Systemvoreinstellung in exocad hinterlegt ist.</p>
+      </div>
+    </li>
+    <li class="step">
+      <div class="step-body">
+        <h2>Platzieren &amp; berechnen lassen</h2>
+        <p>Auf das Modell klicken, um die Struktur zu platzieren, mit OK bestätigen und die kurze Berechnung abwarten („Berechnung läuft, bitte warten…").</p>
+      </div>
+    </li>
+    <li class="step">
+      <div class="step-body">
+        <h2>Ergebnis prüfen</h2>
+        <p>Das hohle Druckmodell zeigt jetzt die Hexagon-Stützstruktur in der passenden Größe für TL² PivotPin – druckfertig für Ihren SHERA-Drucker. Nach dem Druck: Pins einsetzen, in Sockelgips einbetten, fertig.</p>
+      </div>
+    </li>
+  </ol>
+
+  <p class="note">Fragen zur Einrichtung oder zu TL² PivotPin? Wir helfen gerne persönlich weiter.</p>
+
+  <div class="cta">
+    <a class="btn" href="../index.html?intro-skip=1#muster">Muster anfordern →</a>
+    <p>Kostenlose Musterpackung inkl. dieser Anleitung.</p>
+  </div>
+</div>
+</body>
+</html>
