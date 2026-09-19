@@ -83,6 +83,7 @@
 
   .skip { position: absolute; left: -999px; top: 8px; background: var(--surface); color: var(--ink); padding: 8px 14px; z-index: 20; }
   .skip:focus { left: 16px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
   .wrap { width: 100%; max-width: 1160px; margin-inline: auto; padding-inline: 20px; }
 
@@ -109,6 +110,9 @@
   .nav a:hover { background: rgba(109,213,213,.12); }
   .nav .nav-cta { background: var(--mint); color: #12303a; }
   .nav .nav-cta:hover { background: #8be0e0; }
+  .nav-cart { display: inline-flex; align-items: center; gap: 6px; color: var(--on-slate); text-decoration: none; font-size: 1.15rem; padding: 10px 12px; border-radius: 6px; }
+  .nav-cart:hover { background: rgba(109,213,213,.12); }
+  .cart-badge { background: var(--mint); color: #12303a; font: 700 .72rem/1 'Poppins', sans-serif; min-width: 18px; height: 18px; border-radius: 9px; display: inline-flex; align-items: center; justify-content: center; padding: 0 5px; }
 
   /* Hero */
   .hero {
@@ -214,6 +218,12 @@
   .link-btn:hover { text-decoration: underline; }
   .link-btn-3d { color: var(--mint-ink); font-size: .9rem; min-height: 0; margin-top: -4px; }
 
+  .cart-controls { display: flex; align-items: center; gap: 10px; margin-top: 4px; }
+  .qty-input { width: 60px; min-height: 40px; padding: 6px 8px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; text-align: center; }
+  .qty-input:focus { outline: 2px solid var(--focus); outline-offset: 1px; }
+  .btn-cart { flex: 1; min-height: 40px; padding: 0 14px; border-radius: 8px; border: none; background: var(--mint); color: #12303a; font: 600 .88rem 'Poppins', sans-serif; cursor: pointer; white-space: nowrap; transition: background .2s; }
+  .btn-cart:hover { background: #8be0e0; }
+
   /* How it works */
   .how { background: var(--surface); border-block: 1px solid var(--line); }
   .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; counter-reset: s; }
@@ -258,6 +268,19 @@
   .form-note { font-size: .82rem; color: var(--on-slate-soft); }
   .form-status { font-weight: 500; color: var(--mint); }
 
+  /* Cart */
+  .cart-empty { color: var(--ink-soft); padding: 8px 0 36px; }
+  .cart-empty a { color: var(--mint-ink); font-weight: 600; }
+  .cart-table-wrap { overflow-x: auto; margin-bottom: 4px; }
+  .cart-table { width: 100%; border-collapse: collapse; }
+  .cart-table th, .cart-table td { padding: 12px 10px; text-align: left; border-bottom: 1px solid var(--line); font-size: .92rem; vertical-align: middle; }
+  .cart-table th { color: var(--ink-soft); font-weight: 600; font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; }
+  .cart-table td small { color: var(--ink-soft); }
+  .cart-remove { background: none; border: none; padding: 0; cursor: pointer; color: var(--ink-soft); font: inherit; font-size: .85rem; font-weight: 500; }
+  .cart-remove:hover { color: var(--mint-ink); text-decoration: underline; }
+  .cart-total { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; margin-bottom: 32px; border-top: 2px solid var(--line); font: 600 1.1rem 'Poppins', sans-serif; }
+  .cart-sample { grid-template-columns: 1fr; max-width: 560px; margin-inline: auto; }
+
   footer { padding-block: 40px; color: var(--ink-soft); font-size: .9rem; }
   footer .wrap { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
   footer .brand { font-size: 20px; color: var(--ink); }
@@ -272,7 +295,7 @@
     .fact:nth-child(n+3) { border-top: 1px solid var(--line); }
   }
   @media (max-width: 560px) {
-    .nav a:not(.nav-cta) { display: none; }
+    .nav a:not(.nav-cta):not(.nav-cart) { display: none; }
     .hero { padding-block: 36px 44px; }
     .hero-mark { font-size: 30px; }
     .hero-actions .btn { width: 100%; }
@@ -332,6 +355,9 @@
       <a href="#funktion">So funktioniert's</a>
       <a href="3d/pivotpin-3d.html" target="_blank" rel="noopener">3D-Ansicht ↗</a>
       <a href="#faq">FAQ</a>
+      <a class="nav-cart" href="#warenkorb" aria-label="Warenkorb ansehen">
+        <span aria-hidden="true">🛒</span><span id="cart-badge" class="cart-badge" hidden>0</span>
+      </a>
       <a class="nav-cta" href="#muster">Muster anfordern</a>
     </nav>
   </div>
@@ -396,6 +422,11 @@
               <span class="price">19,89 € <small>netto</small></span>
               <a class="link-btn" href="#muster">Muster anfordern →</a>
             </div>
+            <div class="cart-controls">
+              <label class="sr-only" for="qty-shera-s01">Menge (Packungen)</label>
+              <input class="qty-input" id="qty-shera-s01" type="number" min="1" value="1" inputmode="numeric">
+              <button class="btn-cart" type="button" data-add-to-cart data-sku="shera-s01" data-name="TL² PivotPin SHERA S01" data-price="19.89" data-unit="Packung (100 Stk.)">In den Warenkorb</button>
+            </div>
           </div>
         </article>
 
@@ -412,6 +443,11 @@
             <div class="meta">
               <span class="price">19,89 € <small>netto</small></span>
               <a class="link-btn" href="#muster">Muster anfordern →</a>
+            </div>
+            <div class="cart-controls">
+              <label class="sr-only" for="qty-shera-s02">Menge (Packungen)</label>
+              <input class="qty-input" id="qty-shera-s02" type="number" min="1" value="1" inputmode="numeric">
+              <button class="btn-cart" type="button" data-add-to-cart data-sku="shera-s02" data-name="TL² PivotPin SHERA S02" data-price="19.89" data-unit="Packung (100 Stk.)">In den Warenkorb</button>
             </div>
           </div>
         </article>
@@ -430,6 +466,11 @@
             <div class="meta">
               <span class="price">18,89 € <small>netto</small></span>
               <a class="link-btn" href="#muster">Muster anfordern →</a>
+            </div>
+            <div class="cart-controls">
+              <label class="sr-only" for="qty-exocad-e01">Menge (Packungen)</label>
+              <input class="qty-input" id="qty-exocad-e01" type="number" min="1" value="1" inputmode="numeric">
+              <button class="btn-cart" type="button" data-add-to-cart data-sku="exocad-e01" data-name="TL² PivotPin exocad E01" data-price="18.89" data-unit="Packung (100 Stk.)">In den Warenkorb</button>
             </div>
           </div>
         </article>
@@ -545,6 +586,53 @@
     </div>
   </section>
 
+  <section class="block" id="warenkorb">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Warenkorb</h2>
+        <p>Stellen Sie sich Ihre Bestellung zusammen und senden Sie uns eine unverbindliche Anfrage – eine Online-Zahlung findet noch nicht statt.</p>
+      </div>
+      <p id="cart-empty" class="cart-empty">Ihr Warenkorb ist noch leer. <a href="#produkte">Zu den Produkten →</a></p>
+      <div id="cart-content" hidden>
+        <div class="cart-table-wrap">
+          <table class="cart-table">
+            <thead>
+              <tr><th>Produkt</th><th>Menge</th><th>Einzelpreis</th><th>Summe</th><th></th></tr>
+            </thead>
+            <tbody id="cart-items"></tbody>
+          </table>
+        </div>
+        <div class="cart-total">
+          <span>Gesamtsumme (netto)</span>
+          <strong id="cart-total-amount">0,00 €</strong>
+        </div>
+        <div class="sample cart-sample">
+          <div>
+            <h2>Bestellanfrage senden</h2>
+            <p>Wir prüfen Verfügbarkeit und Preis und bestätigen Ihre Bestellung persönlich per E-Mail.</p>
+          </div>
+          <form class="form" id="cart-form" novalidate>
+            <div class="field">
+              <label for="c-lab">Labor</label>
+              <input id="c-lab" name="labor" autocomplete="organization" required>
+            </div>
+            <div class="field">
+              <label for="c-mail">E-Mail</label>
+              <input id="c-mail" name="email" type="email" autocomplete="email" required>
+            </div>
+            <div class="field">
+              <label for="c-msg">Nachricht (optional)</label>
+              <textarea id="c-msg" name="nachricht" placeholder="Lieferadresse, Wunschtermin, Rückfragen …"></textarea>
+            </div>
+            <button class="btn btn-mint" type="submit">Anfrage senden</button>
+            <p class="form-note">Vorschau: Es findet noch keine Online-Zahlung statt. Diese Anfrage wird noch nicht an ein Postfach übertragen.</p>
+            <p class="form-status" id="cart-form-status" role="status" hidden></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="block legal" id="impressum">
     <div class="wrap">
       <div class="section-head">
@@ -584,9 +672,11 @@
       <p>Diese Seite bindet Schriftarten von Google Fonts ein, die dazu von Servern von Google geladen werden. Dabei wird die IP-Adresse Ihres Endgeräts an Google übertragen. Rechtsgrundlage ist unser berechtigtes Interesse an einer technisch stabilen und einheitlichen Darstellung der Seite (Art. 6 Abs. 1 lit. f DSGVO).</p>
       <h3>4. Musteranfrage-Formular</h3>
       <p>Das Formular „Kostenlose Musterpackung anfordern" ist derzeit eine Vorschau und noch nicht mit einem Postfach oder Server verbunden – eingegebene Daten werden aktuell nicht übertragen oder gespeichert. Sobald das Formular aktiv geschaltet wird, werden die eingegebenen Daten (Laborname, E-Mail-Adresse, optionale Nachricht) ausschließlich zur Bearbeitung Ihrer Anfrage verwendet (Art. 6 Abs. 1 lit. b DSGVO) und nicht an Dritte weitergegeben. Diese Erklärung wird dann entsprechend aktualisiert.</p>
-      <h3>5. Cookies und Tracking</h3>
+      <h3>5. Warenkorb und Bestellanfrage</h3>
+      <p>Der Warenkorb speichert die von Ihnen ausgewählten Produkte und Mengen ausschließlich lokal in Ihrem Browser (localStorage) auf Ihrem Gerät – diese Daten werden nicht an uns übertragen. Es findet keine Online-Zahlung statt. Das Formular „Bestellanfrage senden" ist ebenfalls eine Vorschau und noch nicht mit einem Postfach oder Server verbunden; eingegebene Daten werden aktuell nicht übertragen oder gespeichert. Sobald Warenkorb und Formular aktiv geschaltet werden, gilt für die Verarbeitung Art. 6 Abs. 1 lit. b DSGVO, und diese Erklärung wird entsprechend aktualisiert.</p>
+      <h3>6. Cookies und Tracking</h3>
       <p>Diese Website verwendet aktuell keine Cookies und keine Analyse- oder Tracking-Tools.</p>
-      <h3>6. Ihre Rechte</h3>
+      <h3>7. Ihre Rechte</h3>
       <p>Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch bezüglich Ihrer bei uns gespeicherten personenbezogenen Daten sowie das Recht auf Beschwerde bei einer Aufsichtsbehörde. Wenden Sie sich dazu an: <a href="mailto:info@tobias-loew.com">info@tobias-loew.com</a>.</p>
     </div>
   </section>
@@ -599,6 +689,7 @@
       <span>PINOVA LAB</span>
     </a>
     <nav aria-label="Rechtliches">
+      <a href="#warenkorb">Warenkorb</a>
       <a href="#impressum">Impressum</a>
       <a href="#datenschutz">Datenschutz</a>
       <a href="#muster">Kontakt</a>
@@ -621,5 +712,109 @@
       status.hidden = false;
       form.reset();
     });
+  })();
+</script>
+
+<script>
+  (function () {
+    var CART_KEY = 'pinova-cart-v1';
+    var PRODUCTS = {};
+    var cart = {};
+    try { cart = JSON.parse(localStorage.getItem(CART_KEY)) || {}; } catch (e) { cart = {}; }
+
+    function saveCart() {
+      try { localStorage.setItem(CART_KEY, JSON.stringify(cart)); } catch (e) {}
+    }
+    function formatEUR(n) {
+      return n.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+    }
+
+    var badge = document.getElementById('cart-badge');
+    var emptyEl = document.getElementById('cart-empty');
+    var contentEl = document.getElementById('cart-content');
+    var itemsEl = document.getElementById('cart-items');
+    var totalEl = document.getElementById('cart-total-amount');
+
+    function renderCart() {
+      var skus = Object.keys(cart).filter(function (sku) { return cart[sku] > 0 && PRODUCTS[sku]; });
+      var count = skus.reduce(function (sum, sku) { return sum + cart[sku]; }, 0);
+      if (badge) { badge.textContent = count; badge.hidden = count === 0; }
+      if (!itemsEl) return;
+      itemsEl.innerHTML = '';
+      var total = 0;
+      skus.forEach(function (sku) {
+        var p = PRODUCTS[sku];
+        var qty = cart[sku];
+        var sum = p.price * qty;
+        total += sum;
+        var tr = document.createElement('tr');
+        var tdName = document.createElement('td');
+        tdName.innerHTML = p.name + '<br><small>' + p.unit + '</small>';
+        var tdQty = document.createElement('td');
+        var qtyInput = document.createElement('input');
+        qtyInput.type = 'number'; qtyInput.min = '1'; qtyInput.value = qty; qtyInput.className = 'qty-input';
+        qtyInput.setAttribute('aria-label', 'Menge ändern: ' + p.name);
+        qtyInput.addEventListener('change', function () {
+          var newQty = Math.max(1, parseInt(qtyInput.value, 10) || 1);
+          cart[sku] = newQty;
+          saveCart();
+          renderCart();
+        });
+        tdQty.appendChild(qtyInput);
+        var tdPrice = document.createElement('td');
+        tdPrice.textContent = formatEUR(p.price);
+        var tdSum = document.createElement('td');
+        tdSum.textContent = formatEUR(sum);
+        var tdRemove = document.createElement('td');
+        var removeBtn = document.createElement('button');
+        removeBtn.type = 'button'; removeBtn.className = 'cart-remove'; removeBtn.textContent = 'Entfernen';
+        removeBtn.addEventListener('click', function () {
+          delete cart[sku];
+          saveCart();
+          renderCart();
+        });
+        tdRemove.appendChild(removeBtn);
+        tr.appendChild(tdName); tr.appendChild(tdQty); tr.appendChild(tdPrice); tr.appendChild(tdSum); tr.appendChild(tdRemove);
+        itemsEl.appendChild(tr);
+      });
+      if (totalEl) totalEl.textContent = formatEUR(total) + ' netto';
+      if (emptyEl) emptyEl.hidden = count > 0;
+      if (contentEl) contentEl.hidden = count === 0;
+    }
+
+    document.querySelectorAll('[data-add-to-cart]').forEach(function (btn) {
+      var sku = btn.dataset.sku;
+      PRODUCTS[sku] = { name: btn.dataset.name, price: parseFloat(btn.dataset.price), unit: btn.dataset.unit };
+      btn.addEventListener('click', function () {
+        var qtyInput = document.getElementById('qty-' + sku);
+        var qty = Math.max(1, parseInt(qtyInput.value, 10) || 1);
+        cart[sku] = (cart[sku] || 0) + qty;
+        saveCart();
+        renderCart();
+        var original = btn.textContent;
+        btn.textContent = 'Im Warenkorb ✓';
+        setTimeout(function () { btn.textContent = original; }, 1400);
+      });
+    });
+
+    var cartForm = document.getElementById('cart-form');
+    if (cartForm) {
+      cartForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var lab = document.getElementById('c-lab');
+        var mail = document.getElementById('c-mail');
+        var status = document.getElementById('cart-form-status');
+        if (!lab.value.trim()) { status.textContent = 'Bitte geben Sie den Namen Ihres Labors ein.'; status.hidden = false; lab.focus(); return; }
+        if (!mail.validity.valid || !mail.value) { status.textContent = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.'; status.hidden = false; mail.focus(); return; }
+        status.textContent = 'Danke! Ihre Bestellanfrage ist notiert. Wir melden uns mit einer Bestätigung per E-Mail.';
+        status.hidden = false;
+        cart = {};
+        saveCart();
+        renderCart();
+        cartForm.reset();
+      });
+    }
+
+    renderCart();
   })();
 </script>
