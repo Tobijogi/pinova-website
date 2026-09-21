@@ -246,6 +246,19 @@
   .faq details[open] summary::after { content: "–"; }
   .faq details p { padding: 0 18px 18px; color: var(--ink-soft); }
 
+  /* Blog teaser */
+  .blog-teaser { background: var(--surface); border-block: 1px solid var(--line); }
+  .blog-teaser-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 22px; }
+  .blog-teaser-card { background: var(--ground); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; color: inherit; transition: transform .15s, box-shadow .15s; }
+  .blog-teaser-card:hover { transform: translateY(-2px); box-shadow: 0 16px 32px rgba(0,0,0,.1); }
+  .blog-teaser-card img { width: 100%; aspect-ratio: 16/10; object-fit: cover; }
+  .blog-teaser-body { padding: 18px 20px 22px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .blog-teaser-body .eyebrow { font-size: .68rem; margin-bottom: 0; }
+  .blog-teaser-body h3 { font-size: 1.02rem; }
+  .blog-teaser-body p { color: var(--ink-soft); font-size: .88rem; }
+  .blog-teaser-body .read-more { margin-top: auto; padding-top: 6px; font: 600 .85rem 'Poppins', sans-serif; color: var(--mint-ink); }
+  .blog-teaser-more { margin-top: 28px; text-align: center; }
+
   /* Legal (Impressum / Datenschutz) */
   section.legal { padding-block: 20px; border-top: 1px solid var(--line); }
   .legal .wrap { max-width: 760px; }
@@ -367,6 +380,7 @@
       <a href="#produkte">Produkte</a>
       <a href="#funktion">So funktioniert's</a>
       <a href="3d/pivotpin-3d.html" target="_blank" rel="noopener">3D-Ansicht ↗</a>
+      <a href="blog/index.html">Blog</a>
       <a href="#faq">FAQ</a>
       <a class="nav-cart" href="#warenkorb" aria-label="Warenkorb ansehen">
         <span aria-hidden="true">🛒</span><span id="cart-badge" class="cart-badge" hidden>0</span>
@@ -407,7 +421,7 @@
     <div class="wrap">
       <div class="fact"><b>100 Stk.</b><span>pro Packung</span></div>
       <div class="fact"><b>ab 18,89 € netto</b><span>Listenpreis je Packung</span></div>
-      <div class="fact"><b>40–60 %</b><span>weniger Harzvolumen pro Modell (laborintern)</span></div>
+      <div class="fact"><b>40–57 %</b><span>weniger Harzvolumen pro Modell (laborintern)</span></div>
       <div class="fact"><b>SHERA · exocad</b><span>kompatibel</span></div>
       <div class="fact"><b>Designgeschützt</b><span>beim Patentamt eingetragen</span></div>
     </div>
@@ -534,7 +548,46 @@
           <figcaption>Gips wird um die eingesetzten Pins in die Sockelform gegossen</figcaption>
         </figure>
       </div>
-      <p class="source">Die 40–60 % weniger Harzvolumen pro Modell sind laborinterne Werte, genannt im Fachartikel „Kleines Bauteil, großes Vergnügen", Quintessenz News, 23.07.2026. Die Ersparnis in Ihrem Labor hängt von Modell und Drucker ab.</p>
+      <p class="source">Die 40–57 % weniger Harzvolumen pro Modell sind laborinterne Werte, genannt im Fachartikel „Kleines Bauteil, großes Vergnügen", Quintessenz News, 23.07.2026. Die Ersparnis in Ihrem Labor hängt von Modell und Drucker ab.</p>
+    </div>
+  </section>
+
+  <section class="block blog-teaser" id="blog-teaser">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Aus dem Blog</h2>
+        <p>40 bis 57 % weniger Harz pro Modell, 255 € Ersparnis im Monat bei 100 Zahnkränzen – so rechnet sich PivotPin in der Praxis. Mehr dazu im Blog.</p>
+      </div>
+      <div class="blog-teaser-grid">
+        <a class="blog-teaser-card" href="blog/pivotpin-sockelplatte-harz-sparen/index.html">
+          <img src="bilder/pivotpin_hero_slate_1920x1080.webp" alt="TL² PivotPin auf einer gedruckten Zahnkranz-Wabenstruktur" loading="lazy" width="1920" height="1080">
+          <div class="blog-teaser-body">
+            <span class="eyebrow">Grundlagen</span>
+            <h3>Kleines Bauteil, großes Vergnügen</h3>
+            <p>Warum die gedruckte Sockelplatte überflüssig ist – und was ein Labor mit 100 Modellen im Monat spart.</p>
+            <span class="read-more">Weiterlesen →</span>
+          </div>
+        </a>
+        <a class="blog-teaser-card" href="blog/pivotpin-workflow-integration-anleitung/index.html">
+          <img src="images/sockelform-giessen.jpg" alt="Gips wird in eine Sockelform mit eingesetztem Zahnmodell und PivotPins gegossen" loading="lazy" width="800" height="979">
+          <div class="blog-teaser-body">
+            <span class="eyebrow">Anleitung</span>
+            <h3>PivotPin im Workflow integrieren</h3>
+            <p>In fünf Schritten vom Zahnkranz zum fertigen Gipssockel – für SHERA und exocad.</p>
+            <span class="read-more">Weiterlesen →</span>
+          </div>
+        </a>
+        <a class="blog-teaser-card" href="blog/nachhaltigkeit-dentalproduktion-empco/index.html">
+          <img src="bilder/pivotpin_mint_1600x1200.webp" alt="TL² PivotPin Produktdetail in Mint" loading="lazy" width="1600" height="1200">
+          <div class="blog-teaser-body">
+            <span class="eyebrow">Nachhaltigkeit</span>
+            <h3>Vom Versprechen zur Verantwortung</h3>
+            <p>Was ab der EmpCo-Richtlinie noch als Umweltaussage erlaubt ist – und was echte Materialeinsparung bedeutet.</p>
+            <span class="read-more">Weiterlesen →</span>
+          </div>
+        </a>
+      </div>
+      <p class="blog-teaser-more"><a class="link-btn" href="blog/index.html">Alle Artikel im Blog →</a></p>
     </div>
   </section>
 
@@ -550,7 +603,7 @@
         </details>
         <details>
           <summary>Wie viel Harz spare ich?</summary>
-          <p>Im eigenen Labor lag die Ersparnis bei 40–60 % Harzvolumen pro Modell. Wie viel es bei Ihnen ist, hängt von Modellgröße, Drucker und Einstellungen ab. Am besten testen Sie es mit einer Musterpackung.</p>
+          <p>Im eigenen Labor lag die Ersparnis bei 40–57 % Harzvolumen pro Modell. Wie viel es bei Ihnen ist, hängt von Modellgröße, Drucker und Einstellungen ab. Am besten testen Sie es mit einer Musterpackung.</p>
         </details>
         <details>
           <summary>Wer bekommt eine kostenlose Musterpackung?</summary>
@@ -709,6 +762,7 @@
       <span>PINOVA LAB</span>
     </a>
     <nav aria-label="Rechtliches">
+      <a href="blog/index.html">Blog</a>
       <a href="#warenkorb">Warenkorb</a>
       <a href="#impressum">Impressum</a>
       <a href="#datenschutz">Datenschutz</a>

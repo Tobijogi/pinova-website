@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PivotPin einrichten: Anleitung für SHERA und exocad | Pinova Lab</title>
+<meta name="description" content="In fünf Schritten vom Zahnkranz zum fertigen Gipssockel – ohne Bohren, Kleben oder Isolieren. Mit Einrichtung für SHERAeasy-model und exocad.">
+<meta name="keywords" content="PivotPin Anleitung, exocad Hexagon-Gitter, SHERAeasy-model, Zahnkranz sockeln">
+<link rel="canonical" href="https://www.pinova.eu/blog/pivotpin-workflow-integration-anleitung/">
+<meta property="og:title" content="PivotPin einrichten: Anleitung für SHERA und exocad">
+<meta property="og:description" content="In fünf Schritten vom Zahnkranz zum fertigen Gipssockel – ohne Bohren, Kleben oder Isolieren.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.pinova.eu/blog/pivotpin-workflow-integration-anleitung/">
+<meta property="og:locale" content="de_DE">
+<meta property="og:image" content="https://www.pinova.eu/images/sockelform-giessen.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../blog.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "PivotPin im Workflow integrieren – Schritt für Schritt",
+  "description": "In fünf Schritten vom Zahnkranz zum fertigen Gipssockel – ohne Bohren, Kleben oder Isolieren. Mit Einrichtung für SHERAeasy-model und exocad.",
+  "datePublished": "2026-09-21",
+  "dateModified": "2026-09-21",
+  "author": {"@type": "Person", "name": "Tobias Löw"},
+  "publisher": {"@type": "Organization", "name": "Pinova Lab", "url": "https://www.pinova.eu"},
+  "mainEntityOfPage": "https://www.pinova.eu/blog/pivotpin-workflow-integration-anleitung/",
+  "image": "https://www.pinova.eu/images/sockelform-giessen.jpg",
+  "articleSection": "Anleitung",
+  "keywords": "PivotPin Anleitung, exocad Hexagon-Gitter, SHERAeasy-model, Zahnkranz sockeln"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "PivotPin im Workflow integrieren",
+  "description": "Vom Zahnkranz mit Wabenstruktur zum fertigen Gipssockel – ohne Bohren, Kleben oder Isolieren.",
+  "step": [
+    {"@type": "HowToStep", "name": "Software-Setup", "text": "Bei SHERA ist die Wabenstruktur bereits in SHERAeasy-model hinterlegt. Bei exocad das Hexagon-Gitter in den Modell-Parametern auf 120 Prozent stellen."},
+    {"@type": "HowToStep", "name": "Zahnkranz mit Wabenstruktur drucken", "text": "Zahnkranz mittig auf der Bauplattform platzieren, mindestens 10 mm Abstand zum Rand, mit normalen Druckeinstellungen drucken."},
+    {"@type": "HowToStep", "name": "Pins einstecken", "text": "Drei bis vier PivotPins per Rastverschluss spielfrei und ohne Klebstoff in die Wabenstruktur einstecken."},
+    {"@type": "HowToStep", "name": "Direkt in Gips sockeln", "text": "Zahnkranz mit eingesteckten Pins ohne Bohren, Kleben oder Isolieren in Gips einsockeln."},
+    {"@type": "HowToStep", "name": "Stabilität prüfen", "text": "Gesockeltes Modell vorsichtig rütteln – bei vier Pins ist kippfreier Halt garantiert, drei Pins reichen bei korrekter Verteilung."}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Pinova Lab", "item": "https://www.pinova.eu/"},
+    {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://www.pinova.eu/blog/"},
+    {"@type": "ListItem", "position": 3, "name": "PivotPin einrichten: Anleitung für SHERA und exocad", "item": "https://www.pinova.eu/blog/pivotpin-workflow-integration-anleitung/"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "Passen die Pins zu meinem Labor-Workflow?", "acceptedAnswer": {"@type": "Answer", "text": "Ja, sie vereinfachen ihn sogar. Sie sparen Zeit durch Wegfall von Bohren und Kleben – das ist ein klarer Gewinn."}},
+    {"@type": "Question", "name": "Wie schnell ist die Umstellung auf PivotPin?", "acceptedAnswer": {"@type": "Answer", "text": "SHERA ist sofort einsatzbereit, keine Anpassungen nötig. Bei exocad ist das Skalieren des Hexagon-Gitters auf 120 Prozent eine regelmäßige, schnelle Aufgabe von 2 bis 3 Minuten pro Auftrag. Auch Auszubildende im ersten Lehrjahr können damit arbeiten."}},
+    {"@type": "Question", "name": "Kann ich Mix-Modelle drucken, mit und ohne Pins?", "acceptedAnswer": {"@type": "Answer", "text": "Ja, absolut kein Problem. Beide Varianten lassen sich parallel drucken, je nach Anforderung des Zahnarztes."}},
+    {"@type": "Question", "name": "Reichen drei Pins oder brauche ich vier?", "acceptedAnswer": {"@type": "Answer", "text": "Drei Pins sind möglich, vier sind optimal. Entscheidend ist, dass der Zahnkranz beim Sockeln nicht wackelt."}},
+    {"@type": "Question", "name": "Können Auszubildende mit PivotPin arbeiten?", "acceptedAnswer": {"@type": "Answer", "text": "Ja, die Handhabung ist so einfach, dass Auszubildende ab dem ersten Lehrjahr damit arbeiten können."}}
+  ]
+}
+</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="pinova-mark" viewBox="-6 -6 232 222">
+    <g fill="none" stroke="currentColor" stroke-width="10" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M10 42 Q96 8 152 126 L139 199 Z"/>
+      <path d="M139 199 L170 20 Q173 10 184 10 L206 9 Q215 9 212 18 L148 201 Q143 208 139 199 Z"/>
+    </g>
+  </symbol>
+</svg>
+
+<a class="skip" href="#main">Zum Inhalt springen</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../../index.html?intro-skip=1#top" aria-label="Pinova Lab – Startseite">
+      <svg viewBox="-6 -6 232 222" aria-hidden="true"><use href="#pinova-mark"/></svg>
+      <span>PINOVA <span class="lab">LAB</span></span>
+    </a>
+    <nav class="nav" aria-label="Hauptnavigation">
+      <a href="../../index.html?intro-skip=1#produkte">Produkte</a>
+      <a href="../../index.html?intro-skip=1#funktion">So funktioniert's</a>
+      <a href="../index.html" aria-current="page">Blog</a>
+      <a href="../../index.html?intro-skip=1#faq">FAQ</a>
+      <a class="nav-cta" href="../../index.html?intro-skip=1#muster">Muster anfordern</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap-narrow">
+    <ol class="breadcrumb">
+      <li><a href="../../index.html?intro-skip=1#top">Pinova Lab</a></li>
+      <li><a href="../index.html">Blog</a></li>
+      <li>Workflow-Integration</li>
+    </ol>
+
+    <header class="article-header">
+      <p class="eyebrow">Anwender · SHERA &amp; exocad · Azubis</p>
+      <h1>PivotPin im Workflow integrieren – Schritt für Schritt</h1>
+      <p class="article-meta"><span>Tobias Löw, Pinova Lab</span><span>Aktualisiert 21. September 2026</span><span>~9 Min. Lesezeit</span></p>
+    </header>
+
+    <figure class="article-figure">
+      <img src="../../images/sockelform-giessen.jpg" alt="Gips wird in eine Sockelform mit eingesetztem Zahnmodell und PivotPins gegossen" loading="eager" width="800" height="979">
+      <figcaption>Gips wird um die eingesteckten Pins in die Sockelform gegossen – der letzte Schritt vor dem fertigen Arbeitsmodell.</figcaption>
+    </figure>
+
+    <article class="article-body">
+      <h2>Vorbereitung: Das brauchen Sie</h2>
+      <p>Bevor Sie starten, sammeln Sie folgende Komponenten:</p>
+      <ul>
+        <li>Eine 100er-Packung TL² PivotPin</li>
+        <li>Ein Dentalmodell (gedruckt mit SHERA oder Rapid Shape)</li>
+        <li>Die passende Software (SHERAeasy-model oder exocad ab DentalCAD 3.2 Elefsina)</li>
+        <li>Bei exocad zwei bis drei Minuten für die Skalierung des Hexagon-Gitters – und zwar vor jedem Auftrag erneut</li>
+      </ul>
+      <p>Das war's bereits. Es ist bewusst simpel – auch deshalb, weil jeder im Labor damit arbeiten können soll, vom erfahrenen Techniker bis zum Auszubildenden im ersten Lehrjahr.</p>
+
+      <h2>Schritt 1: Software-Setup – Je nach Druckersystem</h2>
+      <h3>Für SHERA-Nutzer: Plug-and-Play</h3>
+      <p>Die gute Nachricht zuerst: Wenn Sie mit SHERA drucken, ist die Wabenstruktur bereits in SHERAeasy-model hinterlegt. Sie müssen nichts anpassen. Keine Konfiguration, keine komplizierten Einstellungen – Sie können sofort mit PivotPin-Modellen starten.</p>
+      <p>Pins aus der Packung nehmen, einstecken, fertig. SHERA macht den Rest.</p>
+      <h3>Für exocad-Nutzer: Hexagon-Gitter skalieren</h3>
+      <p>Wenn Sie mit exocad arbeiten (die Honeycomb-Option gibt es ab DentalCAD 3.2 Elefsina), kommt ein Arbeitsschritt dazu:</p>
+      <ol>
+        <li>Öffnen Sie in exocad die Modell-Parameter.</li>
+        <li>Suchen Sie den Parameter „Hexagon-Gitter" oder „Hexagon-Wabe".</li>
+        <li>Stellen Sie den Wert auf <strong>120 Prozent</strong>.</li>
+        <li>Speichern Sie die Einstellung.</li>
+      </ol>
+      <p>Zeitaufwand: zwei bis drei Minuten – und zwar bei jedem Auftrag erneut, nicht einmalig.</p>
+      <p><strong>Wichtig:</strong> exocad setzt diesen Wert bei jedem neuen Auftrag automatisch auf 100 Prozent zurück. Vor jedem neuen Auftrag müssen Sie das Hexagon-Gitter erneut auf 120 Prozent skalieren (2–3 Minuten pro Auftrag). Schreiben Sie sich dafür eine kleine Checkliste – viele Labs drucken sie sich aus und pinnen sie neben den PC. Eine bebilderte Schritt-für-Schritt-Anleitung für den exocad Model Creator finden Sie in unserer <a href="../../anleitung/exocad-120.html">exocad-Einrichtungsanleitung</a>.</p>
+
+      <h2>Schritt 2: Zahnkranz mit Wabenstruktur drucken</h2>
+      <p>Nun konstruieren Sie wie gewohnt Ihren Zahnkranz – aber dieses Mal mit integrierter Wabenstruktur statt massiver Sockelplatte:</p>
+      <p><strong>Größe:</strong> Der Zahnkranz wiegt zwischen 13 und 25 Gramm, je nach Größe, Zuschnitt und Höhe des Modells.</p>
+      <p><strong>Nesting:</strong> Nutzen Sie Ihre Nesting-Software, um den Zahnkranz auf der Bauplattform zu platzieren. Technisch funktioniert die Wabenstruktur an jeder Position – am zuverlässigsten baut sie sich aber mittig auf, mit mindestens zehn Millimetern Abstand zum Plattformrand.</p>
+      <p><strong>Druckeinstellungen:</strong> Verwenden Sie Ihre normalen Druckeinstellungen. Es ist nicht nötig, die Parameter zu verändern – die Wabenstruktur funktioniert mit Standard-Settings perfekt.</p>
+
+      <h2>Schritt 3: Pins einstecken – Der Rastverschluss nutzen</h2>
+      <p>Nach dem Druck nehmen Sie die PivotPins aus der Packung:</p>
+      <p><strong>Bei SHERA:</strong> Die Zapfen der Pins rasten spürbar in die Dreieck-Struktur der Wabenstruktur ein. Sie spüren ein deutliches Klick-Gefühl. Das ist genau richtig.</p>
+      <p><strong>Bei exocad:</strong> Die hexagonale Struktur ist zum manuellen Einstecken ausgelegt. Der Pin rutscht sanft in die Struktur.</p>
+      <p><strong>Anzahl der Pins:</strong> Drei bis vier Pins pro Kiefer sind möglich. Die Regel: Je mehr, desto stabiler. Optimal sind vier Pins. Drei sind auch ausreichend – entscheidend ist, dass der Zahnkranz beim Sockeln nicht wackelt.</p>
+      <p><strong>Das Geheimnis:</strong> Der Rastverschluss sorgt dafür, dass jeder Pin spielfrei und ohne jeden Klebstoff im Modellboden sitzt. Das ist die Innovation: Statt zu kleben, rasten Sie ein. Elegant, sauber, reversibel.</p>
+
+      <h2>Schritt 4: Direkt in Gips sockeln – Ohne Bohren, ohne Kleben, ohne Isolieren</h2>
+      <p>Jetzt kommt der eigentliche Vorteil zum Tragen: Sie nehmen den Zahnkranz mit den eingesteckten Pins und sockeln ihn wie gewohnt in Gips ein. Das ist alles:</p>
+      <ul>
+        <li><strong>Kein Bohren</strong> (keine Bohrlöcher im Modell)</li>
+        <li><strong>Keine Klebstoffe</strong> (saubere Oberfläche)</li>
+        <li><strong>Keine Isolierung</strong> (weniger Material, weniger Mühe)</li>
+        <li><strong>Direkt einsatzbereit</strong> (der Zahnarzt erhält ein perfektes Modell)</li>
+      </ul>
+      <p>Die Pins halten den Zahnkranz während des Sockelns in Position – und danach dauerhaft. Wichtig zum Verständnis: Der Zahnkranz bleibt im Gipssockel. Er ist nicht als abnehmbares Teil gedacht und soll auch nicht mit Gewalt herausgerissen werden. Genau darin liegt der Gewinn gegenüber der gedruckten Sockelplatte: Wo die spröde Platte beim Herausschlagen aus der Artikulation brach, hält die Verbindung aus Pin und Gips.</p>
+      <p>Der Zahnarzt bekommt ein Modell ohne sichtbare Manipulationen, ohne Kratzer, ohne Fremdstoffe. Das ist der Qualitätsgewinn, den er sofort sieht.</p>
+
+      <h2>Schritt 5: Stabilität und Halt – Die Regel der Kippfreiheit</h2>
+      <p>Ein wichtiger Check: Der Zahnkranz muss beim Sockeln stabil sitzen. Dafür gelten diese Regeln:</p>
+      <ul>
+        <li><strong>Vier Pins:</strong> Kippfreier Halt garantiert.</li>
+        <li><strong>Drei Pins:</strong> Ebenfalls ausreichend – solange sie richtig verteilt sind.</li>
+        <li><strong>Weniger als drei:</strong> Riskant – der Zahnkranz kann wackeln.</li>
+      </ul>
+      <p>Test: Nehmen Sie das gesockelte Modell in die Hand und rütteln Sie vorsichtig daran. Der Zahnkranz sollte sich nicht bewegen. Wenn er wackelt, brauchen Sie einen vierten Pin oder müssen die Positionen anpassen.</p>
+
+      <h2>Häufige Fehler und ihre Lösungen</h2>
+      <h3>Fehler 1: Zu viel Kraft beim Einstecken</h3>
+      <p><strong>Das Problem:</strong> Sie drücken die Pins zu hart in die Wabenstruktur. <strong>Die Lösung:</strong> Lassen Sie die Pins sanft einrasten, statt sie zu quetschen. Die Rastverschlüsse sind belastbar, aber nicht unzerstörbar. Ein leichter Druck reicht aus – Sie spüren das Klick-Gefühl, und dann sitzen die Pins.</p>
+      <h3>Fehler 2: exocad-Hexagon-Wert vergessen</h3>
+      <p><strong>Das Problem:</strong> Sie vergessen, vor dem Export das Hexagon-Gitter auf 120 Prozent zu überprüfen. Heraus kommt ein Modell mit zu kleiner Wabenstruktur. <strong>Die Lösung:</strong> Schreiben Sie sich eine Checkliste oder nutzen Sie eine digitale Erinnerung. Vor jedem neuen Auftrag: Hexagon-Gitter auf 120 % skalieren, dann Export starten.</p>
+      <h3>Fehler 3: Falsche Nesting-Position</h3>
+      <p><strong>Das Problem:</strong> Der Zahnkranz wird zu nah am Rand der Bauplattform platziert – die Wabenstruktur wird schlecht ausgebildet. <strong>Die Lösung:</strong> Platzieren Sie den Zahnkranz mittig auf der Bauplattform. Mindestens zehn Millimeter Abstand zum Rand sind ideal.</p>
+      <h3>Fehler 4: Zu wenige Pins</h3>
+      <p><strong>Das Problem:</strong> Sie verwenden nur zwei Pins – der Zahnkranz wackelt beim Sockeln. <strong>Die Lösung:</strong> Mindestens drei Pins, optimal vier. Verteilen Sie die Pins symmetrisch um den Zahnkranz.</p>
+
+      <h2>Druckzeit &amp; Material-Ersparnis im Überblick</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Szenario</th><th>Sockelplatte</th><th>Zahnkranz</th><th>Harz gesamt</th><th>Eingespartes Material</th><th>Druckzeit</th></tr></thead>
+          <tbody>
+            <tr><td>Ohne PivotPin</td><td>17 g</td><td>13–25 g</td><td>30–42 g</td><td>—</td><td>Normal</td></tr>
+            <tr><td>Mit PivotPin</td><td>—</td><td>13–25 g</td><td>13–25 g</td><td>17 g pro Modell (40–57 %)</td><td>Kürzer, soweit die Platte Bauhöhe gekostet hat</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Zur Druckzeit eine ehrliche Einordnung: Bei DLP- und LCD-Druckern belichtet das Display jede Schicht komplett, die Druckdauer hängt also an der Bauhöhe und nicht am Volumen. Schneller wird es dort, wo die Sockelplatte bisher Bauhöhe gekostet hat. Der verlässliche Zeitgewinn liegt im Post-Processing.</p>
+      <p>Die Ersparnis wird schnell messbar: Gerechnet mit einem durchschnittlichen Zahnkranz von 19 Gramm ergibt ein Kilogramm Harz ohne PivotPin etwa 28 Modelle mit Platte – mit PivotPin etwa 53 Modelle ohne Platte. Das sind 25 zusätzliche Zahnkränze pro Kilogramm, also rund 89 Prozent mehr. Bei kleineren oder größeren Zahnkränzen verschieben sich die absoluten Zahlen, die Ersparnis von 40 bis 57 Prozent bleibt.</p>
+
+      <h2>Monatliche Kostenersparnis – Ein Beispiel-Szenario</h2>
+      <p>Angenommen, Ihr Labor druckt monatlich 100 Zahnkränze:</p>
+      <ul>
+        <li><strong>Ersparte Harz-Menge:</strong> 1,7 Kilogramm pro 100 Modelle (die 17-Gramm-Platten)</li>
+        <li><strong>Harz-Kosten gespart:</strong> ca. 255 Euro pro Monat (bei 150 Euro pro Kilogramm; Modellharze liegen am Markt eher bei 177 Euro/kg)</li>
+        <li><strong>Materialwannen:</strong> Eine neue Wanne kostet je nach Druckermodell 290 bis 500 Euro. Bei SHERA lässt sich die gelartige Folie nicht einzeln tauschen – fällig ist immer die komplette Wanne. Weil mit der Sockelplatte die große Querschnittsfläche und damit die Abzugskräfte wegfallen, hält sie spürbar länger</li>
+        <li><strong>Neudrucke:</strong> Fehlerquoten sinken, Zeitverschwendung fällt weg</li>
+      </ul>
+      <p><strong>Jahresersparnis:</strong> ca. 3.060 Euro an reinen Harz-Kosten – ohne Nebeneffekte wie reduzierte Neudrucke und längere Lebensdauer der Druckwanne.</p>
+
+      <h2>Post-Processing: Einfacher und schneller</h2>
+      <ol>
+        <li>Normales Harz-Abwaschen: wie immer</li>
+        <li>Pins herausnehmen oder lassen: je nach Bedarf</li>
+        <li>Kein Bohren mehr: entfällt</li>
+        <li>Kein Klebe-Aufwand: entfällt</li>
+        <li>Gips-Sockel ist sofort einsatzbereit: keine Extra-Bearbeitung</li>
+      </ol>
+      <p>Sie sparen nicht nur Harz und Material – Sie sparen auch Zeit im Post-Processing.</p>
+
+      <h2>Kompatibilität &amp; Drucker – Was funktioniert wo?</h2>
+      <ul>
+        <li><strong>SHERA-Drucker</strong> (SHERAprint-Reihe, inkl. Rapid Shape mit SHERAeasy-model): Volle Kompatibilität, keine Anpassungen nötig</li>
+        <li><strong>exocad-Workflow:</strong> Kompatibel mit der 120-%-Skalierung</li>
+        <li><strong>Andere Drucker:</strong> Kommt auf die Wabenstruktur-Kompatibilität der Software an – fragen Sie den technischen Support</li>
+      </ul>
+
+      <h2>Tipps für den ersten Einsatz</h2>
+      <ol>
+        <li><strong>Start klein:</strong> Probieren Sie PivotPin mit einer kleinen Packung (100 Stück), nicht gleich mit 1.000.</li>
+        <li><strong>Test-Serie:</strong> Führen Sie eine Test-Serie mit 10 Modellen durch und dokumentieren Sie die Ergebnisse.</li>
+        <li><strong>Daten erfassen:</strong> Notieren Sie Harz-Ersparnis, Zeit, Fehlerquoten – die Zahlen motivieren.</li>
+        <li><strong>Team schulen:</strong> Die Handhabung ist einfach, aber eine kurze Einweisung hilft.</li>
+        <li><strong>Checkliste ins QS-System:</strong> Integrieren Sie die exocad-Hexagon-Skalierung in Ihr Qualitätskontroll-System.</li>
+      </ol>
+
+      <h2>FAQ – Schnelle Antworten auf praktische Fragen</h2>
+      <div class="article-faq">
+        <details>
+          <summary>Passen die Pins zu meinem Labor-Workflow?</summary>
+          <p>Ja, sie vereinfachen ihn sogar. Sie sparen Zeit durch Wegfall von Bohren und Kleben – das ist ein klarer Gewinn.</p>
+        </details>
+        <details>
+          <summary>Wie schnell ist die Umstellung?</summary>
+          <p>SHERA: Sofort einsatzbereit, keine Anpassungen nötig. exocad: Das Hexagon-Gitter auf 120 % zu skalieren ist eine regelmäßige, schnelle Aufgabe (2–3 Minuten pro Auftrag). Der praktische Einsatz funktioniert sofort – auch Auszubildende können damit im ersten Lehrjahr arbeiten.</p>
+        </details>
+        <details>
+          <summary>Kann ich Mix-Modelle drucken – mit und ohne Pins?</summary>
+          <p>Ja, absolut kein Problem. Sie können beide Varianten parallel drucken, je nach Anforderung des Zahnarztes.</p>
+        </details>
+        <details>
+          <summary>Reichen drei Pins oder brauche ich vier?</summary>
+          <p>Drei Pins sind möglich, vier sind optimal. Entscheidend: Der Zahnkranz darf beim Sockeln nicht wackeln.</p>
+        </details>
+        <details>
+          <summary>Was ist mit Qualitätskontrolle – worauf muss ich achten?</summary>
+          <p>Checken Sie vor jedem Druck: Ist bei exocad das Hexagon-Gitter auf 120 % skaliert? Sind die Pins richtig eingesteckt? Ist der Zahnkranz kippfrei?</p>
+        </details>
+        <details>
+          <summary>Können Auszubildende damit arbeiten?</summary>
+          <p>Ja, die Handhabung ist so einfach, dass Auszubildende ab dem ersten Lehrjahr damit arbeiten können.</p>
+        </details>
+      </div>
+
+      <h2>Fazit &amp; Nächste Schritte</h2>
+      <p>Die Integration von PivotPin in Ihren Workflow funktioniert in fünf Schritten. Die Ersparnis ist sofort messbar – beim Material, im Post-Processing und bei der Qualität. Nachhaltigkeit ist dabei kein Opfer – es ist der Bonus.</p>
+      <ul>
+        <li>Integration: bei SHERA sofort, bei exocad zwei bis drei Minuten pro Auftrag</li>
+        <li>Material-Ersparnis: sofort sichtbar</li>
+        <li>Zeitersparnis: im Post-Processing</li>
+        <li>Qualitätsgewinn: für jeden Zahnarzt spürbar</li>
+      </ul>
+
+      <h2>Material- &amp; Kostenersparnis-Übersicht</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Faktor</th><th>Ohne PivotPin</th><th>Mit PivotPin</th><th>Ersparnis</th></tr></thead>
+          <tbody>
+            <tr><td>Sockelplatte-Gewicht pro Modell</td><td>17 g</td><td>0 g</td><td>17 g/Modell</td></tr>
+            <tr><td>Harz-Verbrauch pro Modell</td><td>30–42 g</td><td>13–25 g</td><td>40–57 % weniger, 1,7 kg pro 100 Modelle</td></tr>
+            <tr><td>Harz-Kosten der Sockelplatten (150 €/kg, 100 Modelle)</td><td>~255 €</td><td>0 €</td><td>255 € gespart je 100 Modelle</td></tr>
+            <tr><td>Materialwanne</td><td>Hohe Abzugskräfte durch große Plattenfläche; bei SHERA ist die Folie nicht tauschbar – fällig ist die komplette Wanne</td><td>Geringere Abzugskräfte, längere Standzeit</td><td>290–500 € je vermiedenem Wannenwechsel</td></tr>
+            <tr><td>Zahnkränze pro kg Harz (bei 19 g Zahnkranz)</td><td>~28 Stück</td><td>~53 Stück</td><td>+25 Stück/kg (+89 %)</td></tr>
+            <tr><td>Post-Processing (Bohren, Kleben, Isolieren)</td><td>Zeitaufwand pro Modell</td><td>Entfällt</td><td>ca. 5–10 Min./Modell (Erfahrungswert)</td></tr>
+            <tr><td>Neudrucke durch Fehler</td><td>5–10 % Fehlerquote (Erfahrungswert)</td><td>Minimiert</td><td>Material- und Zeitersparnis</td></tr>
+            <tr><td>Materialeinsatz Kunststoff</td><td>30–42 g pro Modell</td><td>13–25 g pro Modell</td><td>40–57 % weniger Materialeinsatz</td></tr>
+            <tr><td>Modell-Qualität (Ästhetik, Haptik)</td><td>Kratzer, Bohrlöcher, Klebstoff-Rückstände</td><td>Sauber, professionell, wertig</td><td>Vertrauensfaktor steigt</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>Jahresersparnis eines Beispiel-Labors (100 Zahnkränze/Monat):</strong> Harz-Kosten ca. 3.060 Euro, Materialwannen ca. 290–500 Euro je vermiedenem Wannenwechsel, Neudrucke (Material + Zeit) ca. 500–1.000 Euro (Erfahrungswert) – Gesamtjahresersparnis ca. 3.850–4.560 Euro.</p>
+
+      <div class="tag-list">
+        <span class="tag">PivotPin Anleitung</span>
+        <span class="tag">exocad Hexagon-Gitter</span>
+        <span class="tag">SHERAeasy-model</span>
+        <span class="tag">Zahnkranz sockeln</span>
+      </div>
+
+      <div class="article-cta">
+        <h2>Nächster Schritt</h2>
+        <p>Fordern Sie eine Musterpackung TL² PivotPin an und testen Sie es im eigenen Labor. Der technische Support von Pinova Lab beantwortet alle Fragen und hilft bei der Einrichtung.</p>
+        <div class="btn-row">
+          <a class="btn btn-mint" href="../../index.html?intro-skip=1#muster">Musterpackung anfordern</a>
+          <a class="btn btn-ghost" href="../../anleitung/exocad-120.html" style="color:var(--on-slate);border-color:rgba(238,245,246,.45)">Bebilderte exocad-Anleitung →</a>
+        </div>
+      </div>
+    </article>
+
+    <section class="related-heading">
+      <h2>Weiterlesen</h2>
+      <p>Mehr zu Materialersparnis, Trends und Nachhaltigkeit rund um TL² PivotPin.</p>
+    </section>
+    <div class="post-grid">
+      <a class="post-card" href="../pivotpin-sockelplatte-harz-sparen/index.html">
+        <img src="../../bilder/pivotpin_hero_slate_1920x1080.webp" alt="TL² PivotPin auf einer gedruckten Zahnkranz-Wabenstruktur" loading="lazy" width="1920" height="1080">
+        <div class="post-card-body">
+          <span class="eyebrow">Grundlagen</span>
+          <h3>Kleines Bauteil, großes Vergnügen</h3>
+          <p>Warum die gedruckte Sockelplatte überflüssig ist und was ein Labor mit 100 Modellen im Monat spart.</p>
+          <span class="read-more">Weiterlesen →</span>
+        </div>
+      </a>
+      <a class="post-card" href="../nachhaltigkeit-dentalproduktion-empco/index.html">
+        <img src="../../bilder/pivotpin_mint_1600x1200.webp" alt="TL² PivotPin Produktdetail in Mint" loading="lazy" width="1600" height="1200">
+        <div class="post-card-body">
+          <span class="eyebrow">Nachhaltigkeit</span>
+          <h3>Nachhaltigkeit in der Dentalproduktion</h3>
+          <p>Was ab der EmpCo-Richtlinie noch als Umweltaussage erlaubt ist – und was echte Materialeinsparung bedeutet.</p>
+          <span class="read-more">Weiterlesen →</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="../../index.html?intro-skip=1#top" aria-label="Pinova Lab – Startseite">
+      <svg viewBox="-6 -6 232 222" aria-hidden="true"><use href="#pinova-mark"/></svg>
+      <span>PINOVA LAB</span>
+    </a>
+    <nav aria-label="Rechtliches">
+      <a href="../index.html">Blog</a>
+      <a href="../../index.html?intro-skip=1#warenkorb">Warenkorb</a>
+      <a href="../../index.html?intro-skip=1#impressum">Impressum</a>
+      <a href="../../index.html?intro-skip=1#datenschutz">Datenschutz</a>
+      <a href="../../index.html?intro-skip=1#muster">Kontakt</a>
+    </nav>
+    <span>© 2026 Pinova Lab</span>
+  </div>
+</footer>
+<script>
+if (new URLSearchParams(location.search).has('print')) {
+  document.querySelectorAll('.article-faq details').forEach(function (d) { d.open = true; });
+}
+</script>
+</body>
+</html>
