@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.pinova.eu/sitemap.xml
+Sitemap: https://www.pinovalab.eu/sitemap.xml
