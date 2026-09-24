@@ -309,6 +309,7 @@
   .pay-choice { border: none; margin: 0; padding: 0; display: grid; gap: 10px; }
   .pay-choice legend { font-size: .88rem; font-weight: 500; color: var(--on-slate); margin-bottom: 6px; padding: 0; }
   .choice { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border-radius: 8px; border: 1px solid rgba(238,245,246,.25); background: rgba(255,255,255,.04); cursor: pointer; }
+  .choice[hidden] { display: none; }
   .choice:has(input:checked) { border-color: var(--mint); background: rgba(109,213,213,.1); }
   .choice input, .check input { accent-color: var(--mint); margin-top: 4px; width: 18px; height: 18px; flex: none; }
   .choice b { display: block; color: #fff; font-weight: 600; }
@@ -695,14 +696,14 @@
         <div class="sample cart-sample">
           <div>
             <h2>Bestellung abschließen</h2>
-            <p>Verkauf ausschließlich an Labore und Praxen (Unternehmer). Bezahlen Sie sicher online über Stripe oder bestellen Sie auf Rechnung.</p>
+            <p>Verkauf ausschließlich an Labore und Praxen (Unternehmer). Bezahlen Sie online über unseren europäischen Zahlungsdienstleister Mollie oder bestellen Sie auf Rechnung.</p>
           </div>
           <form class="form" id="cart-form" novalidate>
             <fieldset class="pay-choice">
               <legend>Zahlungsart</legend>
               <label class="choice">
                 <input type="radio" name="zahlart" value="online" checked>
-                <span><b>Online bezahlen</b><small>Karte, SEPA-Lastschrift, Apple Pay oder Google Pay – über Stripe</small></span>
+                <span><b>Online bezahlen</b><small>Kreditkarte, Überweisung und weitere – sicher über Mollie</small></span>
               </label>
               <label class="choice">
                 <input type="radio" name="zahlart" value="rechnung">
@@ -717,37 +718,35 @@
               <label for="c-mail">E-Mail</label>
               <input id="c-mail" name="email" type="email" autocomplete="email" maxlength="200" required>
             </div>
-            <div id="rechnung-felder" class="form" hidden>
+            <div class="field">
+              <label for="c-person">Ansprechperson</label>
+              <input id="c-person" name="ansprechpartner" autocomplete="name" maxlength="120" required>
+            </div>
+            <div class="field">
+              <label for="c-strasse">Lieferadresse: Straße und Hausnummer</label>
+              <input id="c-strasse" name="strasse" autocomplete="street-address" maxlength="120" required>
+            </div>
+            <div class="field-row">
               <div class="field">
-                <label for="c-person">Ansprechperson</label>
-                <input id="c-person" name="ansprechpartner" autocomplete="name" maxlength="120">
-              </div>
-              <div class="field">
-                <label for="c-strasse">Straße und Hausnummer</label>
-                <input id="c-strasse" name="strasse" autocomplete="street-address" maxlength="120">
-              </div>
-              <div class="field-row">
-                <div class="field">
-                  <label for="c-plz">PLZ</label>
-                  <input id="c-plz" name="plz" autocomplete="postal-code" inputmode="numeric" maxlength="5">
-                </div>
-                <div class="field">
-                  <label for="c-ort">Ort</label>
-                  <input id="c-ort" name="ort" autocomplete="address-level2" maxlength="80">
-                </div>
+                <label for="c-plz">PLZ</label>
+                <input id="c-plz" name="plz" autocomplete="postal-code" inputmode="numeric" maxlength="5" required>
               </div>
               <div class="field">
-                <label for="c-tel">Telefon (optional)</label>
-                <input id="c-tel" name="telefon" type="tel" autocomplete="tel" maxlength="40">
+                <label for="c-ort">Ort</label>
+                <input id="c-ort" name="ort" autocomplete="address-level2" maxlength="80" required>
               </div>
-              <div class="field">
-                <label for="c-ustid">USt-IdNr. (optional)</label>
-                <input id="c-ustid" name="ustid" maxlength="20" placeholder="DE…">
-              </div>
-              <div class="field">
-                <label for="c-msg">Nachricht (optional)</label>
-                <textarea id="c-msg" name="nachricht" maxlength="2000" placeholder="Wunschtermin, abweichende Rechnungsadresse, Rückfragen …"></textarea>
-              </div>
+            </div>
+            <div class="field">
+              <label for="c-tel">Telefon (optional)</label>
+              <input id="c-tel" name="telefon" type="tel" autocomplete="tel" maxlength="40">
+            </div>
+            <div class="field">
+              <label for="c-ustid">USt-IdNr. (optional)</label>
+              <input id="c-ustid" name="ustid" maxlength="20" placeholder="DE…">
+            </div>
+            <div class="field">
+              <label for="c-msg">Nachricht (optional)</label>
+              <textarea id="c-msg" name="nachricht" maxlength="2000" placeholder="Wunschtermin, abweichende Rechnungsadresse, Rückfragen …"></textarea>
             </div>
             <div class="hp" aria-hidden="true">
               <label for="c-website">Website</label>
@@ -758,8 +757,8 @@
               <span>Ich bestelle als Unternehmer (§ 14 BGB) für ein Labor oder eine Praxis und akzeptiere die <a href="#agb">AGB</a>.</span>
             </label>
             <button class="btn btn-mint" type="submit" id="cart-submit">Weiter zur Zahlung</button>
-            <p class="form-note" id="cart-note">Sie werden zur sicheren Bezahlseite von Stripe weitergeleitet. Dort geben Sie Rechnungs- und Lieferadresse ein.</p>
-            <p class="form-note" id="cart-test-note" hidden>Testmodus: Zahlungen laufen über die Stripe-Testumgebung, es wird nichts abgebucht.</p>
+            <p class="form-note" id="cart-note">Sie werden zur sicheren Bezahlseite von Mollie weitergeleitet. Die Rechnung senden wir Ihnen per E-Mail.</p>
+            <p class="form-note" id="cart-test-note" hidden>Testmodus: Zahlungen laufen über die Mollie-Testumgebung, es wird nichts abgebucht.</p>
             <p class="form-status" id="cart-form-status" role="status" hidden></p>
           </form>
         </div>
@@ -818,8 +817,8 @@
       <h3>5. Warenkorb, Bestellung und Zahlung</h3>
       <p>Der Warenkorb speichert die von Ihnen ausgewählten Produkte und Mengen lokal in Ihrem Browser (localStorage) auf Ihrem Gerät. An uns übertragen werden diese Daten erst, wenn Sie eine Bestellung absenden.</p>
       <p>Für die Bestellung verarbeiten wir die von Ihnen angegebenen Daten (Labor bzw. Praxis, Ansprechperson, E-Mail-Adresse, Liefer- und Rechnungsadresse, optional Telefonnummer und USt-IdNr.) zur Vertragsabwicklung (Art. 6 Abs. 1 lit. b DSGVO) und bewahren Rechnungsdaten im Rahmen der gesetzlichen Aufbewahrungspflichten auf (Art. 6 Abs. 1 lit. c DSGVO).</p>
-      <p><strong>Online-Zahlung:</strong> Wenn Sie „Online bezahlen" wählen, werden Sie zur Bezahlseite der Stripe Payments Europe Ltd., 1 Grand Canal Street Lower, Dublin 2, Irland, weitergeleitet. Stripe verarbeitet Ihre Zahlungs-, Adress- und Bestelldaten zur Abwicklung der Zahlung und erstellt die Rechnung. Zahlungsdaten wie Kartennummern erhalten wir nicht. Weitere Informationen: <a href="https://stripe.com/de/privacy" target="_blank" rel="noopener">Datenschutzerklärung von Stripe</a>.</p>
-      <p><strong>Kauf auf Rechnung:</strong> Ihre Bestelldaten werden per E-Mail an uns übermittelt. Für den Versand dieser E-Mails nutzen wir den Dienst Resend (Resend Inc., USA) als Auftragsverarbeiter.</p>
+      <p>Ihre Bestellung wird auf unserem Webserver in Deutschland gespeichert und per E-Mail aus unserem eigenen Postfach an uns und als Eingangsbestätigung an Sie gesendet. Eine Weitergabe an andere Dienste findet dabei nicht statt.</p>
+      <p><strong>Online-Zahlung:</strong> Wenn Sie „Online bezahlen" wählen, werden Sie zur Bezahlseite der Mollie B.V., Keizersgracht 126, 1015 CW Amsterdam, Niederlande, weitergeleitet. Wir übermitteln Mollie dafür nur den Rechnungsbetrag und die Bestellnummer; Ihre Zahlungsdaten geben Sie direkt bei Mollie ein, wir erhalten sie nicht. Weitere Informationen: <a href="https://www.mollie.com/de/privacy" target="_blank" rel="noopener">Datenschutzerklärung von Mollie</a>.</p>
       <h3>6. Cookies und Tracking</h3>
       <p>Diese Website verwendet aktuell keine Cookies und keine Analyse- oder Tracking-Tools.</p>
       <h3>7. Ihre Rechte</h3>
@@ -953,11 +952,12 @@
       });
       var shipping = count > 0 ? SHIPPING_NET : 0;
       var netTotal = subtotal + shipping;
-      // MwSt. je Position auf den Cent runden – so rechnen auch Stripe und die Rechnung.
-      var vatCents = skus.reduce(function (sum, sku) {
-        return sum + Math.round(Math.round(PRODUCTS[sku].price * 100) * cart[sku] * VAT_RATE);
-      }, 0) + Math.round(Math.round(shipping * 100) * VAT_RATE);
-      var vat = vatCents / 100;
+      // In Cent rechnen, MwSt. auf die Nettosumme – wie api/lib.php und die Rechnung in Lexware.
+      var netCents = skus.reduce(function (sum, sku) {
+        return sum + Math.round(PRODUCTS[sku].price * 100) * cart[sku];
+      }, 0) + Math.round(shipping * 100);
+      var vat = Math.round(netCents * VAT_RATE) / 100;
+      netTotal = netCents / 100;
       if (subtotalEl) subtotalEl.textContent = formatEUR(subtotal);
       if (vatEl) vatEl.textContent = formatEUR(vat);
       if (totalEl) totalEl.textContent = formatEUR(netTotal + vat);
@@ -987,7 +987,6 @@
       var noteEl = document.getElementById('cart-note');
       var testNoteEl = document.getElementById('cart-test-note');
       var statusEl = document.getElementById('cart-form-status');
-      var invoiceFields = document.getElementById('rechnung-felder');
       // Welche Bestellwege der Server anbietet; ohne Server (Vorschau, GitHub Pages) → E-Mail.
       var shop = { online: false, rechnung: false, test: false, geprueft: false };
 
@@ -1001,14 +1000,12 @@
 
       function updateMode() {
         var method = payMethod();
-        invoiceFields.hidden = method !== 'rechnung';
-        ['c-person', 'c-strasse', 'c-plz', 'c-ort'].forEach(function (id) { field(id).required = method === 'rechnung'; });
         if (viaMail(method)) {
           submitBtn.textContent = 'Bestellung per E-Mail senden';
           noteEl.textContent = 'Die Online-Bestellung ist in dieser Vorschau noch nicht aktiv. Ihr E-Mail-Programm öffnet sich mit der fertigen Bestellung.';
         } else if (method === 'online') {
           submitBtn.textContent = 'Weiter zur Zahlung';
-          noteEl.textContent = 'Sie werden zur sicheren Bezahlseite von Stripe weitergeleitet. Dort geben Sie Rechnungs- und Lieferadresse ein und schließen die Bestellung ab.';
+          noteEl.textContent = 'Sie werden zur sicheren Bezahlseite von Mollie weitergeleitet. Die Rechnung senden wir Ihnen per E-Mail.';
         } else {
           submitBtn.textContent = 'Zahlungspflichtig bestellen';
           noteEl.textContent = 'Sie erhalten die Rechnung per E-Mail. Lieferung innerhalb Deutschlands.';
@@ -1027,15 +1024,13 @@
         return data;
       }
 
-      function validate(method) {
+      function validate() {
         var checks = [['c-lab', 'Bitte geben Sie den Namen Ihres Labors bzw. Ihrer Praxis ein.'],
-                      ['c-mail', 'Bitte geben Sie eine gültige E-Mail-Adresse ein.']];
-        if (method === 'rechnung') {
-          checks.push(['c-person', 'Bitte geben Sie eine Ansprechperson an.'],
+                      ['c-mail', 'Bitte geben Sie eine gültige E-Mail-Adresse ein.'],
+                      ['c-person', 'Bitte geben Sie eine Ansprechperson an.'],
                       ['c-strasse', 'Bitte geben Sie Straße und Hausnummer an.'],
                       ['c-plz', 'Bitte geben Sie eine gültige deutsche Postleitzahl ein.'],
-                      ['c-ort', 'Bitte geben Sie den Ort an.']);
-        }
+                      ['c-ort', 'Bitte geben Sie den Ort an.']];
         for (var i = 0; i < checks.length; i++) {
           var el = field(checks[i][0]);
           var bad = !el.value.trim() || (el.type === 'email' && !el.validity.valid) || (el.id === 'c-plz' && !/^\d{5}$/.test(el.value.trim()));
@@ -1050,11 +1045,9 @@
         Object.keys(data.warenkorb).forEach(function (sku) {
           lines.push(data.warenkorb[sku] + ' × ' + PRODUCTS[sku].name + ' (' + PRODUCTS[sku].unit + ')');
         });
-        lines.push('', 'Labor/Praxis: ' + data.labor, 'E-Mail: ' + data.email);
-        if (method === 'rechnung') {
-          lines.push('Ansprechperson: ' + data.ansprechpartner, 'Adresse: ' + data.strasse + ', ' + data.plz + ' ' + data.ort,
-                     'Telefon: ' + (data.telefon || '–'), 'USt-IdNr.: ' + (data.ustid || '–'), '', data.nachricht);
-        }
+        lines.push('', 'Labor/Praxis: ' + data.labor, 'E-Mail: ' + data.email,
+                   'Ansprechperson: ' + data.ansprechpartner, 'Adresse: ' + data.strasse + ', ' + data.plz + ' ' + data.ort,
+                   'Telefon: ' + (data.telefon || '–'), 'USt-IdNr.: ' + (data.ustid || '–'), '', data.nachricht);
         lines.push('', 'Ich bestelle als Unternehmer (§ 14 BGB) und akzeptiere die AGB.');
         return 'mailto:' + ORDER_MAIL + '?subject=' + encodeURIComponent('Bestellung – ' + data.labor) + '&body=' + encodeURIComponent(lines.join('\n'));
       }
@@ -1069,17 +1062,27 @@
 
       cartForm.querySelectorAll('input[name="zahlart"]').forEach(function (r) { r.addEventListener('change', updateMode); });
 
-      fetch('/api/status', { headers: { accept: 'application/json' } })
+      fetch('/api/status.php', { headers: { accept: 'application/json' } })
         .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
         .then(function (s) { shop.online = !!s.online; shop.rechnung = !!s.rechnung; shop.test = !!s.test; })
         .catch(function () {})
-        .then(function () { shop.geprueft = true; updateMode(); });
+        .then(function () {
+          shop.geprueft = true;
+          // Server läuft, aber Mollie ist (noch) nicht eingerichtet → nur Rechnung anbieten.
+          if (shop.rechnung && !shop.online) {
+            var onlineRadio = cartForm.querySelector('input[name="zahlart"][value="online"]');
+            onlineRadio.disabled = true;
+            onlineRadio.closest('.choice').hidden = true;
+            cartForm.querySelector('input[name="zahlart"][value="rechnung"]').checked = true;
+          }
+          updateMode();
+        });
 
       cartForm.addEventListener('submit', function (e) {
         e.preventDefault();
         statusEl.hidden = true;
         var method = payMethod();
-        if (!validate(method)) return;
+        if (!validate()) return;
         var data = orderData();
         if (Object.keys(data.warenkorb).length === 0) { showStatus('Ihr Warenkorb ist leer.'); return; }
         if (data.website) return;
@@ -1092,8 +1095,9 @@
 
         submitBtn.disabled = true;
         var label = submitBtn.textContent;
-        submitBtn.textContent = method === 'online' ? 'Weiterleitung zu Stripe …' : 'Wird gesendet …';
-        fetch(method === 'online' ? '/api/checkout' : '/api/bestellung', {
+        submitBtn.textContent = method === 'online' ? 'Weiterleitung zu Mollie …' : 'Wird gesendet …';
+        data.zahlart = method;
+        fetch('/api/bestellung.php', {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
           body: JSON.stringify(data)

@@ -31,21 +31,54 @@
   .btn { display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; margin-top: 12px; border-radius: 8px;
     background: var(--mint); color: #12303a; font: 600 1rem 'Poppins', sans-serif; text-decoration: none; }
   a { color: var(--mint-ink); }
+  .tick[hidden] { display: none; }
 </style>
 </head>
 <body>
 <main>
-  <div class="tick" aria-hidden="true">
+  <div class="tick" id="tick" aria-hidden="true" hidden>
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
   </div>
-  <h1>Vielen Dank für Ihre Bestellung!</h1>
-  <p>Ihre Bestellung ist bei uns eingegangen. Die Rechnung und die Zahlungsbestätigung erhalten Sie per E-Mail von unserem Zahlungsdienstleister Stripe.</p>
-  <p>Wir versenden Ihre PivotPins innerhalb Deutschlands. Bei Fragen erreichen Sie uns unter <a href="mailto:info@pinovalab.eu">info@pinovalab.eu</a>.</p>
-  <a class="btn" href="../../index.html">Zurück zur Startseite</a>
+  <h1 id="titel">Einen Moment bitte …</h1>
+  <p id="text">Wir prüfen den Status Ihrer Zahlung.</p>
+  <p>Bei Fragen erreichen Sie uns unter <a href="mailto:info@pinovalab.eu">info@pinovalab.eu</a>.</p>
+  <a class="btn" id="zurueck" href="../../index.html">Zurück zur Startseite</a>
 </main>
 <script>
-  // Warenkorb leeren – die Bestellung ist bezahlt.
-  try { localStorage.removeItem('pinova-cart-v1'); } catch (e) {}
+  (function () {
+    var params = new URLSearchParams(location.search);
+    var titel = document.getElementById('titel');
+    var text = document.getElementById('text');
+    var zurueck = document.getElementById('zurueck');
+
+    function zeige(t, x, erfolgreich) {
+      titel.textContent = t;
+      text.textContent = x;
+      document.getElementById('tick').hidden = !erfolgreich;
+    }
+    function warenkorbLeeren() {
+      try { localStorage.removeItem('pinova-cart-v1'); } catch (e) {}
+    }
+
+    fetch('/api/zahlung.php?nr=' + encodeURIComponent(params.get('nr') || '') + '&t=' + encodeURIComponent(params.get('t') || ''))
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+      .then(function (d) {
+        if (d.status === 'paid') {
+          warenkorbLeeren();
+          zeige('Vielen Dank für Ihre Bestellung!', 'Ihre Zahlung für die Bestellung ' + d.nummer + ' ist eingegangen. Eine Bestätigung ist per E-Mail unterwegs, die Rechnung senden wir Ihnen separat. Wir versenden Ihre PivotPins innerhalb Deutschlands.', true);
+        } else if (d.status === 'open' || d.status === 'pending' || d.status === 'authorized') {
+          warenkorbLeeren();
+          zeige('Vielen Dank für Ihre Bestellung!', 'Ihre Zahlung für die Bestellung ' + d.nummer + ' wird noch verarbeitet (bei Überweisungen kann das einige Tage dauern). Sobald sie eingegangen ist, erhalten Sie eine Bestätigung per E-Mail.', true);
+        } else {
+          zeige('Zahlung nicht abgeschlossen', 'Die Zahlung wurde abgebrochen oder ist fehlgeschlagen. Ihr Warenkorb ist noch gespeichert – Sie können es einfach erneut versuchen oder auf Rechnung bestellen.', false);
+          zurueck.textContent = 'Zurück zum Warenkorb';
+          zurueck.href = '../../index.html#warenkorb';
+        }
+      })
+      .catch(function () {
+        zeige('Vielen Dank!', 'Den Status Ihrer Zahlung konnten wir gerade nicht abrufen. Sie erhalten eine Bestätigung per E-Mail, sobald die Zahlung eingegangen ist.', false);
+      });
+  })();
 </script>
 </body>
 </html>

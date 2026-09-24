@@ -1,0 +1,5 @@
+# Zugangsdaten und Kundendaten gehören nicht ins Repository
+api/config.php
+api/daten/*
+!api/daten/.htaccess
+.claude/

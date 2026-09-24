@@ -1,67 +1,59 @@
-# Online-Shop einrichten (Stripe + Kauf auf Rechnung)
+# Online-Shop einrichten (deutscher Webhoster + Mollie)
 
-Der Warenkorb auf `index.html` kennt zwei Bestellwege:
+Ziel: Alles bleibt in Europa, Kundendaten gehen an keine weiteren Dienste. Beteiligt sind nur
 
-| Weg | Was passiert | Code |
-|---|---|---|
-| **Online bezahlen** | Weiterleitung zur Bezahlseite von Stripe (Karte, SEPA-Lastschrift, Apple/Google Pay). Stripe erstellt die Rechnung und schickt sie dem Kunden. Danach landet der Kunde auf `bestellung/danke/`. | `functions/api/checkout.js` |
-| **Kauf auf Rechnung** | Die Bestellung kommt per E-Mail bei Pinova Lab an; die Rechnung wird wie gewohnt selbst geschrieben. | `functions/api/bestellung.js` |
+- **ein deutscher Webhoster** – Domain pinovalab.eu, Postfach info@pinovalab.eu, Website und Bestell-Skripte (PHP) an einem Ort,
+- **Mollie** (Amsterdam) – nur für „Online bezahlen“; Mollie bekommt nur Betrag und Bestellnummer.
 
-Solange die Server-Funktionen nicht laufen (lokale Vorschau, GitHub Pages), öffnet der Button stattdessen das E-Mail-Programm mit der fertigen Bestellung. Die Website bleibt also immer bestellbar.
+## So funktioniert es
 
-**Preise ändern:** in `functions/_shop.js` (verbindlich) **und** `data-price` in `index.html` (Anzeige).
+| Bestellweg | Ablauf |
+|---|---|
+| **Kauf auf Rechnung** | `api/bestellung.php` speichert die Bestellung auf dem Webserver und schickt aus dem eigenen Postfach eine Mail an info@pinovalab.eu und eine Eingangsbestätigung an den Kunden. Die Rechnung wird in Lexware geschrieben. |
+| **Online bezahlen** | `api/bestellung.php` speichert die Bestellung und leitet zu Mollie weiter. Ist die Zahlung da, meldet Mollie das an `api/mollie-webhook.php` → erst dann gehen beide Mails raus („ZAHLUNG EINGEGANGEN“). Der Kunde landet auf `bestellung/danke/`, die den Status anzeigt. |
+
+Ohne PHP-Server (lokale Vorschau, GitHub Pages) öffnet der Button das E-Mail-Programm mit der fertigen Bestellung.
+
+**Preise ändern:** in `api/lib.php` (verbindlich) **und** `data-price` in `index.html` (Anzeige).
 
 ---
 
-## 1. Stripe (zuerst nur Testmodus)
+## 1. Webhoster buchen
 
-1. Konto auf stripe.com anlegen. Oben rechts bleibt der Schalter auf **Testmodus**.
-2. **Entwickler → API-Schlüssel:** den *Geheimschlüssel* kopieren (`sk_test_…`).
-3. **Produktkatalog → Steuersätze → Neu:** Name „USt.“, 19 %, Region Deutschland, **exklusiv** (Preise sind netto). Die ID kopieren (`txr_…`).
-4. **Einstellungen → Unternehmen / Rechnungen:** Firmenname, Adresse, USt-IdNr. DE288904633 und Rechnungsnummern-Präfix eintragen – das steht dann auf jeder Rechnung.
-5. **Einstellungen → Zahlungsmethoden:** Karte, SEPA-Lastschrift, Apple Pay, Google Pay aktivieren.
-6. **Einstellungen → Kunden-E-Mails:** „Erfolgreiche Zahlungen“ und Rechnungs-E-Mails einschalten.
-7. **Profil → Benachrichtigungen:** E-Mail an dich bei jeder erfolgreichen Zahlung – so erfährst du von neuen Bestellungen.
+Ein Paket mit **Domain, E-Mail-Postfach und PHP 8** – z. B. All-Inkl (Sachsen), netcup (Karlsruhe) oder Hetzner Webhosting (Gunzenhausen). Serverstandort Deutschland, Auftragsverarbeitungsvertrag (AVV) im Kundenmenü abschließen.
 
-## 2. Resend (E-Mails für „Kauf auf Rechnung“)
+1. Domain **pinovalab.eu** registrieren bzw. dorthin umziehen.
+2. Postfach **info@pinovalab.eu** anlegen.
+3. PHP-Version **8.0 oder neuer** einstellen.
 
-1. Konto auf resend.com anlegen (kostenloser Tarif reicht), Region **EU** wählen.
-2. **API Keys → Create:** Schlüssel kopieren (`re_…`).
-3. **Zum Testen** ohne eigene Domain: Absender `onboarding@resend.dev`, Empfänger = die E-Mail-Adresse, mit der das Resend-Konto angelegt wurde.
-4. **Später**, wenn pinovalab.eu läuft: Domain in Resend verifizieren, Absender `shop@pinovalab.eu`, und `CUSTOMER_CONFIRMATION=on` setzen – dann bekommt auch der Kunde eine Eingangsbestätigung.
+## 2. Mollie (erst Testmodus)
 
-## 3. Cloudflare Pages (Hosting mit Server-Funktionen)
+1. Konto auf mollie.com anlegen (Unternehmensdaten, Bankkonto). Solange die Prüfung läuft, funktioniert der Testmodus schon.
+2. **Entwickler → API-Schlüssel:** den **Test-API-Schlüssel** (`test_…`) kopieren.
+3. **Einstellungen → Zahlungsmethoden:** gewünschte Methoden aktivieren (z. B. Kreditkarte, Überweisung, SEPA-Lastschrift, PayPal).
 
-1. Konto auf cloudflare.com anlegen → **Workers & Pages → Erstellen → Pages → Mit Git verbinden** → Repository `Tobijogi/pinova-website`, Branch `main`.
-2. Build-Einstellungen: Framework **Keines**, Build-Befehl **leer**, Ausgabeverzeichnis **`/`**.
-3. **Einstellungen → Variablen und Geheimnisse** (jeweils als *Geheimnis* anlegen):
+## 3. Website hochladen
 
-| Name | Wert |
-|---|---|
-| `STRIPE_SECRET_KEY` | `sk_test_…` |
-| `STRIPE_TAX_RATE_ID` | `txr_…` |
-| `RESEND_API_KEY` | `re_…` |
-| `ORDER_EMAIL_TO` | Empfänger der Bestellungen, z. B. info@pinovalab.eu |
-| `ORDER_EMAIL_FROM` | `Pinova Lab <onboarding@resend.dev>` (später `shop@pinovalab.eu`) |
-| `CUSTOMER_CONFIRMATION` | leer lassen; `on`, sobald die Domain bei Resend verifiziert ist |
-
-4. Neu bereitstellen. Die Adresse `…pages.dev` zeigt die Seite; `…pages.dev/api/status` muss `"online":true` zeigen.
-5. Domain `pinovalab.eu` unter **Benutzerdefinierte Domains** anbinden.
+1. Alle Dateien des Repositorys per FTP bzw. Dateimanager des Hosters ins Web-Verzeichnis laden (ohne `.git` und `.claude`).
+2. `api/config.example.php` **beim Hoster** als `api/config.php` kopieren und ausfüllen (Mollie-Schlüssel, `https://www.pinovalab.eu`, info@pinovalab.eu). Diese Datei **nie** ins Repository oder in einen Chat geben.
+3. Prüfen: `https://www.pinovalab.eu/api/status.php` zeigt `"online":true,"rechnung":true,"test":true`.
+4. Prüfen, dass das hier **nicht** abrufbar ist (Fehler 403): `https://www.pinovalab.eu/api/config.php` liefert nichts, `https://www.pinovalab.eu/api/daten/` ist gesperrt.
 
 ## 4. Testen
 
-- Testkarte **4242 4242 4242 4242**, beliebiges Ablaufdatum in der Zukunft, beliebige Prüfziffer.
-- SEPA-Test-IBAN: **DE89 3704 0044 0532 0130 00**.
-- In Stripe unter **Zahlungen** und **Rechnungen** prüfen, ob Beträge, MwSt. und Rechnungsdaten stimmen.
+- Eine Bestellung **auf Rechnung** aufgeben → Mail an info@pinovalab.eu und Bestätigung an die Kunden-Adresse prüfen (auch Spam-Ordner).
+- Eine Bestellung **online** aufgeben → auf der Mollie-Testseite „Bezahlt“ wählen → Danke-Seite zeigt „Zahlung eingegangen“, beide Mails kommen an. Dann „Abgebrochen“ testen.
+- Beträge vergleichen: Warenkorb, Mollie, Mails.
 
 ## 5. Vor dem Livegang
 
 - [ ] AGB (B2B) im Abschnitt `#agb` von `index.html` veröffentlichen
-- [ ] Datenschutzerklärung: Abschnitt „Hosting“ von GitHub Pages auf Cloudflare umstellen; Texte zu Stripe/Resend prüfen lassen
-- [ ] Mit Resend einen Auftragsverarbeitungsvertrag (DPA) abschließen
-- [ ] In Stripe auf **Live** umschalten: dort den Steuersatz **neu anlegen** (Test- und Live-IDs sind getrennt), `sk_live_…` und neue `txr_…` in Cloudflare eintragen
-- [ ] Eine echte Bestellung mit kleinem Betrag durchspielen und erstatten
+- [ ] Datenschutzerklärung: Abschnitt „Hosting“ auf den gewählten Webhoster umstellen; Abschnitt Google Fonts entfernen, sobald die Schriften lokal eingebunden sind; alles prüfen lassen
+- [ ] In `api/config.php` den **Live-Schlüssel** (`live_…`) eintragen
+- [ ] Eine echte Bestellung mit kleinem Betrag durchspielen und in Mollie erstatten
+- [ ] Löschfristen festlegen: Die Bestellungen liegen in `api/daten/bestellungen/` – nach Übernahme in Lexware und Ablauf der Aufbewahrungsfristen löschen
 
-## Später: Nachbarländer
+## Später
 
-In `functions/api/checkout.js` weitere Länder bei `allowed_countries` ergänzen (z. B. `'AT'`). Für EU-Firmenkunden mit gültiger USt-IdNr. gilt dann Reverse Charge (Rechnung ohne deutsche MwSt.) – das braucht eine Anpassung der Steuerlogik und sollte vorher mit dem Steuerberater abgestimmt werden. Die Schweiz ist Nicht-EU (Ausfuhr, Zoll).
+- **Nachbarländer:** Länderprüfung in `api/bestellung.php` und im Formular erweitern, Versandkosten je Land, Reverse Charge für EU-Firmenkunden mit USt-IdNr. – vorher mit dem Steuerberater abstimmen. Schweiz = Nicht-EU (Ausfuhr, Zoll).
+- **Lexware:** Optional könnte `api/bestellung.php` Rechnungsentwürfe direkt in Lexware Office anlegen.
