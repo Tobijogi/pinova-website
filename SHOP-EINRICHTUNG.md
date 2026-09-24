@@ -48,7 +48,7 @@ Ein Paket mit **Domain, E-Mail-Postfach und PHP 8** – z. B. All-Inkl (Sachsen)
 ## 5. Vor dem Livegang
 
 - [ ] AGB (B2B) im Abschnitt `#agb` von `index.html` veröffentlichen
-- [ ] Datenschutzerklärung: Abschnitt „Hosting“ auf den gewählten Webhoster umstellen; Abschnitt Google Fonts entfernen, sobald die Schriften lokal eingebunden sind; alles prüfen lassen
+- [ ] Datenschutzerklärung: Abschnitt „Hosting“ auf den gewählten Webhoster umstellen; alles prüfen lassen
 - [ ] In `api/config.php` den **Live-Schlüssel** (`live_…`) eintragen
 - [ ] Eine echte Bestellung mit kleinem Betrag durchspielen und in Mollie erstatten
 - [ ] Löschfristen festlegen: Die Bestellungen liegen in `api/daten/bestellungen/` – nach Übernahme in Lexware und Ablauf der Aufbewahrungsfristen löschen
