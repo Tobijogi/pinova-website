@@ -1,8 +1,8 @@
-# Online-Shop einrichten (deutscher Webhoster + Mollie)
+# Online-Shop einrichten (STRATO + Mollie)
 
 Ziel: Alles bleibt in Europa, Kundendaten gehen an keine weiteren Dienste. Beteiligt sind nur
 
-- **ein deutscher Webhoster** – Domain pinovalab.eu, Postfach info@pinovalab.eu, Website und Bestell-Skripte (PHP) an einem Ort,
+- **STRATO** (Berlin, Rechenzentren in Deutschland) – Domain pinovalab.eu, Postfach info@pinovalab.eu, Website und Bestell-Skripte (PHP) an einem Ort,
 - **Mollie** (Amsterdam) – nur für „Online bezahlen“; Mollie bekommt nur Betrag und Bestellnummer.
 
 ## So funktioniert es
@@ -18,13 +18,15 @@ Ohne PHP-Server (lokale Vorschau, GitHub Pages) öffnet der Button das E-Mail-Pr
 
 ---
 
-## 1. Webhoster buchen
+## 1. Webhoster: STRATO
 
-Ein Paket mit **Domain, E-Mail-Postfach und PHP 8** – z. B. All-Inkl (Sachsen), netcup (Karlsruhe) oder Hetzner Webhosting (Gunzenhausen). Serverstandort Deutschland, Auftragsverarbeitungsvertrag (AVV) im Kundenmenü abschließen.
+Domain **pinovalab.eu** und Postfach **info@pinovalab.eu** sind bei STRATO gebucht. Im STRATO-Kundenlogin prüfen bzw. einstellen:
 
-1. Domain **pinovalab.eu** registrieren bzw. dorthin umziehen.
-2. Postfach **info@pinovalab.eu** anlegen.
-3. PHP-Version **8.0 oder neuer** einstellen.
+1. Der Vertrag enthält **Webspace mit PHP** (ein reines Domain-Paket reicht nicht) – sonst auf ein Hosting-Paket upgraden.
+2. **PHP-Version 8.0 oder neuer** einstellen (Bereich „Einstellungen → PHP-Version“ bzw. „Hosting“).
+3. **SSL-Zertifikat** für pinovalab.eu und www.pinovalab.eu aktivieren.
+4. **Auftragsverarbeitungsvertrag (AVV)** im Kundenlogin abschließen.
+5. Zugangsdaten für **SFTP bzw. FTP** notieren – darüber werden die Dateien hochgeladen.
 
 ## 2. Mollie (erst Testmodus)
 
@@ -48,7 +50,7 @@ Ein Paket mit **Domain, E-Mail-Postfach und PHP 8** – z. B. All-Inkl (Sachsen)
 ## 5. Vor dem Livegang
 
 - [ ] AGB (B2B) im Abschnitt `#agb` von `index.html` veröffentlichen
-- [ ] Datenschutzerklärung: Abschnitt „Hosting“ auf den gewählten Webhoster umstellen; alles prüfen lassen
+- [ ] Datenschutzerklärung: Abschnitt „Hosting“ von GitHub Pages auf STRATO umstellen; alles prüfen lassen
 - [ ] In `api/config.php` den **Live-Schlüssel** (`live_…`) eintragen
 - [ ] Eine echte Bestellung mit kleinem Betrag durchspielen und in Mollie erstatten
 - [ ] Löschfristen festlegen: Die Bestellungen liegen in `api/daten/bestellungen/` – nach Übernahme in Lexware und Ablauf der Aufbewahrungsfristen löschen
