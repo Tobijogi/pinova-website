@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Bestellung eingegangen – Pinova Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --ink: #1f2d3d; --ink-soft: #4a5a6a; --ground: #f6f8f9; --surface: #ffffff; --line: #dde4e8;
+    --mint: #6dd5d5; --mint-ink: #1d7f80;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #e6eef1; --ink-soft: #a6b6bd; --ground: #131b22; --surface: #1b252e; --line: #2b3843; --mint-ink: #6dd5d5;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #e6eef1; --ink-soft: #a6b6bd; --ground: #131b22; --surface: #1b252e; --line: #2b3843; --mint-ink: #6dd5d5;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px 16px;
+    background: var(--ground); color: var(--ink); font: 400 1rem/1.65 'Inter', system-ui, sans-serif; }
+  main { max-width: 560px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 40px 32px; }
+  .tick { width: 56px; height: 56px; border-radius: 50%; background: var(--mint); color: #12303a; display: grid; place-items: center; margin-bottom: 20px; }
+  h1 { font: 600 clamp(1.5rem, 4vw, 2rem)/1.2 'Poppins', system-ui, sans-serif; margin: 0 0 12px; }
+  p { margin: 0 0 12px; color: var(--ink-soft); }
+  .btn { display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; margin-top: 12px; border-radius: 8px;
+    background: var(--mint); color: #12303a; font: 600 1rem 'Poppins', sans-serif; text-decoration: none; }
+  a { color: var(--mint-ink); }
+</style>
+</head>
+<body>
+<main>
+  <div class="tick" aria-hidden="true">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+  </div>
+  <h1>Vielen Dank für Ihre Bestellung!</h1>
+  <p>Ihre Bestellung ist bei uns eingegangen. Die Rechnung und die Zahlungsbestätigung erhalten Sie per E-Mail von unserem Zahlungsdienstleister Stripe.</p>
+  <p>Wir versenden Ihre PivotPins innerhalb Deutschlands. Bei Fragen erreichen Sie uns unter <a href="mailto:info@tobias-loew.com">info@tobias-loew.com</a>.</p>
+  <a class="btn" href="../../index.html">Zurück zur Startseite</a>
+</main>
+<script>
+  // Warenkorb leeren – die Bestellung ist bezahlt.
+  try { localStorage.removeItem('pinova-cart-v1'); } catch (e) {}
+</script>
+</body>
+</html>
