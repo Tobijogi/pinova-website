@@ -41,7 +41,7 @@ Solange die Server-Funktionen nicht laufen (lokale Vorschau, GitHub Pages), öff
 | `STRIPE_SECRET_KEY` | `sk_test_…` |
 | `STRIPE_TAX_RATE_ID` | `txr_…` |
 | `RESEND_API_KEY` | `re_…` |
-| `ORDER_EMAIL_TO` | Empfänger der Bestellungen, z. B. info@tobias-loew.com |
+| `ORDER_EMAIL_TO` | Empfänger der Bestellungen, z. B. info@pinovalab.eu |
 | `ORDER_EMAIL_FROM` | `Pinova Lab <onboarding@resend.dev>` (später `shop@pinovalab.eu`) |
 | `CUSTOMER_CONFIRMATION` | leer lassen; `on`, sobald die Domain bei Resend verifiziert ist |
 
