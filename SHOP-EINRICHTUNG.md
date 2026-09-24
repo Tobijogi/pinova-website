@@ -22,7 +22,8 @@ Ohne PHP-Server (lokale Vorschau, GitHub Pages) öffnet der Button das E-Mail-Pr
 
 Domain **pinovalab.eu** und Postfach **info@pinovalab.eu** sind bei STRATO gebucht. Im STRATO-Kundenlogin prüfen bzw. einstellen:
 
-1. Der Vertrag enthält **Webspace mit PHP** (ein reines Domain-Paket reicht nicht) – sonst auf ein Hosting-Paket upgraden.
+1. Paket: **STRATO Hosting Basic** (Auftrag 2616561) – enthält Webspace mit PHP. Das Paket „Hosting für WordPress Plus“ wird für diese Website nicht gebraucht.
+   **Wichtig:** Im selben Paket liegt auch **tl-dental.de**. Unter „Domains → Domainverwaltung“ für pinovalab.eu (und www.pinovalab.eu) als Ziel einen **eigenen Ordner** einstellen, z. B. `/pinovalab`, und die Dateien nur dort hochladen – sonst wird die Seite von tl-dental.de überschrieben.
 2. **PHP-Version 8.0 oder neuer** einstellen (Bereich „Einstellungen → PHP-Version“ bzw. „Hosting“).
 3. **SSL-Zertifikat** für pinovalab.eu und www.pinovalab.eu aktivieren.
 4. **Auftragsverarbeitungsvertrag (AVV)** im Kundenlogin abschließen.
@@ -36,7 +37,7 @@ Domain **pinovalab.eu** und Postfach **info@pinovalab.eu** sind bei STRATO gebuc
 
 ## 3. Website hochladen
 
-1. Alle Dateien des Repositorys per FTP bzw. Dateimanager des Hosters ins Web-Verzeichnis laden (ohne `.git` und `.claude`).
+1. Alle Dateien des Repositorys per SFTP/FTP in den Ordner von pinovalab.eu (z. B. `/pinovalab`) laden – ohne `.git` und `.claude`.
 2. `api/config.example.php` **beim Hoster** als `api/config.php` kopieren und ausfüllen (Mollie-Schlüssel, `https://www.pinovalab.eu`, info@pinovalab.eu). Diese Datei **nie** ins Repository oder in einen Chat geben.
 3. Prüfen: `https://www.pinovalab.eu/api/status.php` zeigt `"online":true,"rechnung":true,"test":true`.
 4. Prüfen, dass das hier **nicht** abrufbar ist (Fehler 403): `https://www.pinovalab.eu/api/config.php` liefert nichts, `https://www.pinovalab.eu/api/daten/` ist gesperrt.
@@ -50,7 +51,7 @@ Domain **pinovalab.eu** und Postfach **info@pinovalab.eu** sind bei STRATO gebuc
 ## 5. Vor dem Livegang
 
 - [ ] AGB (B2B) im Abschnitt `#agb` von `index.html` veröffentlichen
-- [ ] Datenschutzerklärung: Abschnitt „Hosting“ von GitHub Pages auf STRATO umstellen; alles prüfen lassen
+- [ ] Datenschutzerklärung prüfen lassen (Hosting-Abschnitt nennt STRATO; Firmenname/Anschrift mit der STRATO-Rechnung abgleichen)
 - [ ] In `api/config.php` den **Live-Schlüssel** (`live_…`) eintragen
 - [ ] Eine echte Bestellung mit kleinem Betrag durchspielen und in Mollie erstatten
 - [ ] Löschfristen festlegen: Die Bestellungen liegen in `api/daten/bestellungen/` – nach Übernahme in Lexware und Ablauf der Aufbewahrungsfristen löschen
