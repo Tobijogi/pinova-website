@@ -38,13 +38,13 @@ Domain **pinovalab.eu** und Postfach **info@pinovalab.eu** sind bei STRATO gebuc
 ## 3. Website hochladen
 
 1. Alle Dateien des Repositorys per SFTP/FTP in den Ordner von pinovalab.eu (z. B. `/pinovalab`) laden – ohne `.git` und `.claude`.
-2. `api/config.example.php` **beim Hoster** als `api/config.php` kopieren und ausfüllen (Mollie-Schlüssel, `https://www.pinovalab.eu`, info@pinovalab.eu). Diese Datei **nie** ins Repository oder in einen Chat geben.
+2. `api/config.example.php` **beim Hoster** als `api/config.php` kopieren und ausfüllen (Mollie-Schlüssel, `https://www.pinovalab.eu`, Empfänger order@pinovalab.eu, Absender info@pinovalab.eu). Diese Datei **nie** ins Repository oder in einen Chat geben.
 3. Prüfen: `https://www.pinovalab.eu/api/status.php` zeigt `"online":true,"rechnung":true,"test":true`.
 4. Prüfen, dass das hier **nicht** abrufbar ist (Fehler 403): `https://www.pinovalab.eu/api/config.php` liefert nichts, `https://www.pinovalab.eu/api/daten/` ist gesperrt.
 
 ## 4. Testen
 
-- Eine Bestellung **auf Rechnung** aufgeben → Mail an info@pinovalab.eu und Bestätigung an die Kunden-Adresse prüfen (auch Spam-Ordner).
+- Eine Bestellung **auf Rechnung** aufgeben → Mail an order@pinovalab.eu und Bestätigung an die Kunden-Adresse prüfen (auch Spam-Ordner).
 - Eine Bestellung **online** aufgeben → auf der Mollie-Testseite „Bezahlt“ wählen → Danke-Seite zeigt „Zahlung eingegangen“, beide Mails kommen an. Dann „Abgebrochen“ testen.
 - Beträge vergleichen: Warenkorb, Mollie, Mails.
 

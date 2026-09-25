@@ -11,7 +11,7 @@ return [
     'shop_url' => 'https://www.pinovalab.eu',
 
     // Hier kommen die Bestellungen an …
-    'empfaenger' => 'info@pinovalab.eu',
+    'empfaenger' => 'order@pinovalab.eu',
     // … und von dieser Adresse gehen die Bestätigungen an Kunden (Postfach beim Webhoster).
     'absender' => 'info@pinovalab.eu',
 ];
