@@ -351,6 +351,7 @@
   .cart-remove:hover { color: var(--mint-ink); text-decoration: underline; }
   .cart-summary { margin-bottom: 32px; }
   .cart-summary-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; font-size: .95rem; color: var(--ink-soft); }
+  .cart-shipping-note { margin: -4px 0 4px; font-size: .8rem; color: var(--ink-soft); }
   .cart-summary-total { border-top: 2px solid var(--line); margin-top: 8px; padding-top: 16px; font: 600 1.1rem 'Poppins', sans-serif; color: var(--ink); }
   .cart-sample { grid-template-columns: 1fr; max-width: 560px; margin-inline: auto; }
   .pay-choice { border: none; margin: 0; padding: 0; display: grid; gap: 10px; }
@@ -752,6 +753,7 @@
         <div class="cart-summary">
           <div class="cart-summary-row"><span>Zwischensumme (netto)</span><span id="cart-subtotal">0,00 €</span></div>
           <div class="cart-summary-row"><span>Versand (netto)</span><span id="cart-shipping">4,80 €</span></div>
+          <p class="cart-shipping-note">Versand: 1–4 Packungen 4,80 €, 5–9 Packungen 6,46 €, ab 10 Packungen 9,50 € (netto)</p>
           <div class="cart-summary-row"><span>zzgl. 19 % MwSt.</span><span id="cart-vat">0,00 €</span></div>
           <div class="cart-summary-row cart-summary-total"><span>Gesamtsumme (brutto)</span><strong id="cart-total-amount">0,00 €</strong></div>
         </div>
@@ -854,7 +856,7 @@
       <h3>§ 3 Preise und Versandkosten</h3>
       <ol>
         <li>Es gelten die zum Zeitpunkt der Bestellung auf der Website angegebenen Preise. Alle Preise sind Nettopreise zuzüglich der gesetzlichen Umsatzsteuer. Preisänderungen für künftige Bestellungen bleiben vorbehalten; auf bereits abgegebene Bestellungen wirken sie sich nicht aus.</li>
-        <li>Für den Versand innerhalb Deutschlands berechnen wir eine Versandpauschale von 4,80 € netto je Bestellung. Die Versandkosten werden im Warenkorb vor Abschluss der Bestellung angezeigt.</li>
+        <li>Für den Versand innerhalb Deutschlands berechnen wir je Bestellung eine Versandpauschale nach Anzahl der Packungen: 1 bis 4 Packungen 4,80 €, 5 bis 9 Packungen 6,46 €, ab 10 Packungen 9,50 € (jeweils netto). Die Versandkosten werden im Warenkorb vor Abschluss der Bestellung angezeigt.</li>
       </ol>
       
       <h3>§ 4 Zahlung</h3>
@@ -1070,7 +1072,12 @@
 <script>
   (function () {
     var CART_KEY = 'pinova-cart-v1';
-    var SHIPPING_NET = 4.80;
+    // Versand nach Gesamtzahl der Packungen (netto) – wie VERSAND_STAFFEL in api/lib.php.
+    var SHIPPING_TIERS = [[10, 9.50], [5, 6.46], [1, 4.80]];
+    function shippingFor(count) {
+      for (var i = 0; i < SHIPPING_TIERS.length; i++) if (count >= SHIPPING_TIERS[i][0]) return SHIPPING_TIERS[i][1];
+      return 0;
+    }
     var VAT_RATE = 0.19;
     var PRODUCTS = {};
     var cart = {};
@@ -1091,7 +1098,6 @@
     var shippingEl = document.getElementById('cart-shipping');
     var vatEl = document.getElementById('cart-vat');
     var totalEl = document.getElementById('cart-total-amount');
-    if (shippingEl) shippingEl.textContent = formatEUR(SHIPPING_NET);
 
     function renderCart() {
       var skus = Object.keys(cart).filter(function (sku) { return cart[sku] > 0 && PRODUCTS[sku]; });
@@ -1135,7 +1141,8 @@
         tr.appendChild(tdName); tr.appendChild(tdQty); tr.appendChild(tdPrice); tr.appendChild(tdSum); tr.appendChild(tdRemove);
         itemsEl.appendChild(tr);
       });
-      var shipping = count > 0 ? SHIPPING_NET : 0;
+      var shipping = shippingFor(count);
+      if (shippingEl) shippingEl.textContent = formatEUR(shipping);
       var netTotal = subtotal + shipping;
       // In Cent rechnen, MwSt. auf die Nettosumme – wie api/lib.php und die Rechnung in Lexware.
       var netCents = skus.reduce(function (sum, sku) {

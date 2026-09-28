@@ -11,7 +11,10 @@ const PRODUKTE = [
     'shera-s02'  => ['name' => 'TL² PivotPin SHERA S02', 'einheit' => 'Packung (100 Stk.)', 'netto' => 1989],
     'exocad-e01' => ['name' => 'TL² PivotPin exocad E01', 'einheit' => 'Packung (100 Stk.)', 'netto' => 1889],
 ];
-const VERSAND = ['name' => 'Versand innerhalb Deutschlands', 'netto' => 480];
+// Versandpauschale nach Gesamtzahl der Packungen: ab x Packungen gilt der Preis (Cent netto).
+// Bei Änderungen auch SHIPPING_TIERS in index.html und AGB § 3 anpassen.
+const VERSAND_NAME = 'Versand innerhalb Deutschlands';
+const VERSAND_STAFFEL = [1 => 480, 5 => 646, 10 => 950];
 const MWST_PROZENT = 19;
 const MAX_MENGE = 500;
 
@@ -77,6 +80,15 @@ function pruefe_warenkorb($warenkorb): array
     return $positionen;
 }
 
+function versand_netto(int $packungen): int
+{
+    $preis = 0;
+    foreach (VERSAND_STAFFEL as $ab => $netto) {
+        if ($packungen >= $ab) $preis = $netto;
+    }
+    return $preis;
+}
+
 // MwSt. auf die Nettosumme – so rechnet auch Lexware auf der Rechnung.
 function summen(array $positionen): array
 {
@@ -84,7 +96,8 @@ function summen(array $positionen): array
     foreach ($positionen as $p) {
         $zeilen[] = ['name' => $p['name'], 'menge' => $p['menge'], 'einzel' => $p['netto'], 'netto' => $p['netto'] * $p['menge']];
     }
-    $zeilen[] = ['name' => VERSAND['name'], 'menge' => 1, 'einzel' => VERSAND['netto'], 'netto' => VERSAND['netto']];
+    $versand = versand_netto(array_sum(array_column($positionen, 'menge')));
+    $zeilen[] = ['name' => VERSAND_NAME, 'menge' => 1, 'einzel' => $versand, 'netto' => $versand];
     $netto = array_sum(array_column($zeilen, 'netto'));
     $mwst = (int) round($netto * MWST_PROZENT / 100);
     return ['zeilen' => $zeilen, 'netto' => $netto, 'mwst' => $mwst, 'brutto' => $netto + $mwst];
