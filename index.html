@@ -157,6 +157,7 @@
   .nav-cart { display: inline-flex; align-items: center; gap: 6px; color: var(--on-slate); text-decoration: none; font-size: 1.15rem; padding: 10px 12px; border-radius: 6px; }
   .nav-cart:hover { background: rgba(109,213,213,.12); }
   .cart-badge { background: var(--mint); color: #12303a; font: 700 .72rem/1 'Poppins', sans-serif; min-width: 18px; height: 18px; border-radius: 9px; display: inline-flex; align-items: center; justify-content: center; padding: 0 5px; }
+  .cart-badge[hidden] { display: none; }
 
   /* Hero */
   .hero {
@@ -382,6 +383,16 @@
   }
   @media (max-width: 560px) {
     .nav a:not(.nav-cta):not(.nav-cart) { display: none; }
+    /* Logo, Warenkorb und Button in einer Zeile halten */
+    .site-header .wrap { gap: 8px; }
+    .site-header .brand { font-size: 18px; }
+    .nav { flex-wrap: nowrap; align-items: center; gap: 2px; }
+    .nav-cart { padding: 8px; }
+    .nav .nav-cta { padding: 9px 12px; font-size: .88rem; white-space: nowrap; }
+  }
+  @media (max-width: 400px) {
+    /* Sehr schmale Handys: nur das Logo-Zeichen, damit nichts über den Rand ragt */
+    .site-header .brand > span { display: none; }
     .hero { padding-block: 36px 44px; }
     .hero-mark { font-size: 30px; }
     .hero-actions .btn { width: 100%; }
