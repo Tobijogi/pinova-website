@@ -666,10 +666,13 @@
         </div>
         <div class="field">
           <label for="f-msg">Nachricht (optional)</label>
-          <textarea id="f-msg" name="nachricht" placeholder="z. B. Drucker, Modellanzahl pro Woche"></textarea>
+          <textarea id="f-msg" name="nachricht" maxlength="2000" placeholder="z. B. Drucker, Modellanzahl pro Woche"></textarea>
+        </div>
+        <div class="hp" aria-hidden="true">
+          <label for="f-website">Website</label>
+          <input id="f-website" name="website" tabindex="-1" autocomplete="off">
         </div>
         <button class="btn btn-mint" type="submit">Musterpackung anfordern</button>
-        <p class="form-note">Vorschau: Das Formular ist noch nicht mit einem Postfach verbunden.</p>
         <p class="form-status" id="form-status" role="status" hidden></p>
       </form>
     </div>
@@ -817,11 +820,12 @@
       <h3>3. Schriftarten</h3>
       <p>Die auf dieser Website verwendeten Schriftarten (Poppins und Inter) sind lokal auf unserem Server gespeichert. Beim Aufruf der Seite werden keine Daten an Google oder andere Anbieter übertragen.</p>
       <h3>4. Musteranfrage-Formular</h3>
-      <p>Das Formular „Kostenlose Musterpackung anfordern" ist derzeit eine Vorschau und noch nicht mit einem Postfach oder Server verbunden – eingegebene Daten werden aktuell nicht übertragen oder gespeichert. Sobald das Formular aktiv geschaltet wird, werden die eingegebenen Daten (Laborname, E-Mail-Adresse, optionale Nachricht) ausschließlich zur Bearbeitung Ihrer Anfrage verwendet (Art. 6 Abs. 1 lit. b DSGVO) und nicht an Dritte weitergegeben. Diese Erklärung wird dann entsprechend aktualisiert.</p>
+      <p>Wenn Sie über das Formular „Kostenlose Musterpackung anfordern" eine Anfrage senden, werden die eingegebenen Daten (Laborname, E-Mail-Adresse, optionale Nachricht) per E-Mail aus unserem eigenen Postfach bei STRATO an uns übermittelt und ausschließlich zur Bearbeitung Ihrer Anfrage und für den Versand des Musters verwendet (Art. 6 Abs. 1 lit. b DSGVO). Die Daten werden nicht auf dem Webserver gespeichert. Wir löschen die Anfrage, sobald sie erledigt ist und keine gesetzlichen Aufbewahrungspflichten bestehen.</p>
       <h3>5. Warenkorb, Bestellung und Zahlung</h3>
       <p>Der Warenkorb speichert die von Ihnen ausgewählten Produkte und Mengen lokal in Ihrem Browser (localStorage) auf Ihrem Gerät. An uns übertragen werden diese Daten erst, wenn Sie eine Bestellung absenden.</p>
       <p>Für die Bestellung verarbeiten wir die von Ihnen angegebenen Daten (Labor bzw. Praxis, Ansprechperson, E-Mail-Adresse, Liefer- und Rechnungsadresse, optional Telefonnummer und USt-IdNr.) zur Vertragsabwicklung (Art. 6 Abs. 1 lit. b DSGVO) und bewahren Rechnungsdaten im Rahmen der gesetzlichen Aufbewahrungspflichten auf (Art. 6 Abs. 1 lit. c DSGVO).</p>
-      <p>Ihre Bestellung wird auf unserem Webserver in Deutschland gespeichert und per E-Mail aus unserem eigenen Postfach an uns und als Eingangsbestätigung an Sie gesendet. Eine Weitergabe an andere Dienste findet dabei nicht statt.</p>
+      <p>Ihre Bestellung wird auf unserem Webserver in Deutschland gespeichert und per E-Mail aus unserem eigenen Postfach an uns und als Eingangsbestätigung an Sie gesendet.</p>
+      <p>Weitergegeben werden Ihre Daten nur, soweit es für die Abwicklung nötig ist: Name bzw. Firma und Lieferadresse an das von uns beauftragte Versandunternehmen, damit es die Ware zustellen kann (Art. 6 Abs. 1 lit. b DSGVO). Rechnungen erstellen wir mit der Buchhaltungssoftware Lexware Office der Haufe-Lexware GmbH &amp; Co. KG, Munzinger Straße 9, 79111 Freiburg, die dafür als Auftragsverarbeiter tätig ist (Art. 28 DSGVO). Rechnungs- und Buchhaltungsdaten erhält außerdem unser Steuerberater, soweit dies für unsere gesetzlichen Pflichten erforderlich ist (Art. 6 Abs. 1 lit. c DSGVO).</p>
       <p><strong>Online-Zahlung:</strong> Wenn Sie „Online bezahlen" wählen, werden Sie zur Bezahlseite der Mollie B.V., Keizersgracht 126, 1015 CW Amsterdam, Niederlande, weitergeleitet. Wir übermitteln Mollie dafür nur den Rechnungsbetrag und die Bestellnummer; Ihre Zahlungsdaten geben Sie direkt bei Mollie ein, wir erhalten sie nicht. Weitere Informationen: <a href="https://www.mollie.com/de/privacy" target="_blank" rel="noopener">Datenschutzerklärung von Mollie</a>.</p>
       <h3>6. Cookies und Tracking</h3>
       <p>Diese Website verwendet aktuell keine Cookies und keine Analyse- oder Tracking-Tools.</p>
@@ -873,15 +877,47 @@
   (function () {
     var form = document.getElementById('sample-form');
     var status = document.getElementById('form-status');
+    var button = form.querySelector('button[type="submit"]');
+    function zeige(text) { status.textContent = text; status.hidden = false; }
+    // Ohne PHP-Server (lokale Vorschau) oder bei Fehlern: fertige Mail im E-Mail-Programm öffnen.
+    function perMail(daten, text) {
+      var body = 'Labor: ' + daten.labor + '\nE-Mail: ' + daten.email + '\n\n' + (daten.nachricht || '');
+      status.innerHTML = '';
+      var link = document.createElement('a');
+      link.href = 'mailto:info@pinovalab.eu?subject=' + encodeURIComponent('Musteranfrage – ' + daten.labor) + '&body=' + encodeURIComponent(body);
+      link.textContent = 'per E-Mail anfordern';
+      status.append(text + ' Bitte ', link, '.');
+      status.hidden = false;
+    }
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var lab = document.getElementById('f-lab');
       var mail = document.getElementById('f-mail');
-      if (!lab.value.trim()) { status.textContent = 'Bitte geben Sie den Namen Ihres Labors ein.'; status.hidden = false; lab.focus(); return; }
-      if (!mail.validity.valid || !mail.value) { status.textContent = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.'; status.hidden = false; mail.focus(); return; }
-      status.textContent = 'Danke! Ihre Anfrage ist notiert. Wir melden uns per E-Mail.';
-      status.hidden = false;
-      form.reset();
+      if (!lab.value.trim()) { zeige('Bitte geben Sie den Namen Ihres Labors ein.'); lab.focus(); return; }
+      if (!mail.validity.valid || !mail.value) { zeige('Bitte geben Sie eine gültige E-Mail-Adresse ein.'); mail.focus(); return; }
+      var daten = {
+        labor: lab.value.trim(),
+        email: mail.value.trim(),
+        nachricht: document.getElementById('f-msg').value.trim(),
+        website: document.getElementById('f-website').value
+      };
+      button.disabled = true;
+      fetch('/api/muster.php', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(daten)
+      })
+        .then(function (r) { return r.json().catch(function () { return {}; }).then(function (body) { return { ok: r.ok, body: body }; }); })
+        .then(function (res) {
+          if (!res.ok || !res.body.ok) {
+            if (res.body.fehler && res.body.fehler.indexOf('Bitte') === 0) { zeige(res.body.fehler); return; }
+            throw new Error();
+          }
+          zeige('Danke! Ihre Anfrage ist bei uns angekommen. Wir melden uns per E-Mail.');
+          form.reset();
+        })
+        .catch(function () { perMail(daten, 'Die Anfrage konnte gerade nicht gesendet werden.'); })
+        .then(function () { button.disabled = false; });
     });
   })();
 </script>

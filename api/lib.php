@@ -137,6 +137,9 @@ function lade_bestellung(string $nummer): ?array
 function sende_mail(string $an, string $betreff, string $inhalt, string $antwortAn): void
 {
     $absender = cfg()['absender'] ?? 'info@pinovalab.eu';
+    // Zeilenumbrüche aus Kopfzeilen entfernen, damit Formulareingaben keine Header einschleusen.
+    $betreff = str_replace(["\r", "\n"], ' ', $betreff);
+    $antwortAn = str_replace(["\r", "\n"], '', $antwortAn);
     $headers = [
         'From' => mb_encode_mimeheader('Pinova Lab', 'UTF-8') . ' <' . $absender . '>',
         'Reply-To' => $antwortAn,
