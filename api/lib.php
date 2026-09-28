@@ -11,7 +11,7 @@ const PRODUKTE = [
     'shera-s02'  => ['name' => 'TL² PivotPin SHERA S02', 'einheit' => 'Packung (100 Stk.)', 'netto' => 1989],
     'exocad-e01' => ['name' => 'TL² PivotPin exocad E01', 'einheit' => 'Packung (100 Stk.)', 'netto' => 1889],
 ];
-const VERSAND = ['name' => 'Versand innerhalb Deutschlands', 'netto' => 646];
+const VERSAND = ['name' => 'Versand innerhalb Deutschlands', 'netto' => 480];
 const MWST_PROZENT = 19;
 const MAX_MENGE = 500;
 
