@@ -3,12 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pinova Lab – PivotPin & Zahntech-Lösungen</title>
-<meta name="description" content="TL² PivotPin von Pinova Lab: verbindet 3D-gedruckte SHERA-Modelle stabil mit Sockelgips, spart Harz und ist auch mit exocad-Modellen nutzbar. Kostenlose Musterpackung für Dentallabore.">
-<meta property="og:title" content="Pinova Lab – TL² PivotPin">
+<title>TL² PivotPin – Pins für 3D-gedruckte Dentalmodelle | Pinova Lab</title>
+<meta name="description" content="TL² PivotPin verbindet 3D-gedruckte Dentalmodelle (SHERA, exocad) stabil mit dem Sockelgips und spart Harz. Kostenlose Musterpackung für Labore.">
+<link rel="canonical" href="https://www.pinovalab.eu/">
+<meta property="og:title" content="TL² PivotPin – Pins für 3D-gedruckte Dentalmodelle | Pinova Lab">
 <meta property="og:description" content="Stabile Verbindung von gedrucktem Modell und Sockelgips – mit weniger Harz pro Modell.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://www.pinovalab.eu/">
+<meta property="og:image" content="https://www.pinovalab.eu/images/pivotpin-shera-s01.jpg">
+<meta property="og:image:alt" content="TL² PivotPin S01 zwischen zwei 3D-gedruckten Zahnmodellen">
+<meta property="og:site_name" content="Pinova Lab">
 <meta property="og:locale" content="de_DE">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="fonts/fonts.css">
 <script type="application/ld+json">
 {
@@ -16,16 +22,51 @@
   "@graph": [
     {
       "@type": "Organization",
+      "@id": "https://www.pinovalab.eu/#organization",
       "name": "Pinova Lab",
-      "url": "https://www.pinovalab.eu",
-      "email": "info@pinovalab.eu"
+      "url": "https://www.pinovalab.eu/",
+      "email": "info@pinovalab.eu",
+      "telephone": "+49 179 2251787",
+      "vatID": "DE288904633",
+      "address": {"@type": "PostalAddress", "streetAddress": "Johann-Sebastian-Bach-Str. 4", "postalCode": "85435", "addressLocality": "Erding", "addressCountry": "DE"}
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.pinovalab.eu/#website",
+      "name": "Pinova Lab",
+      "url": "https://www.pinovalab.eu/",
+      "inLanguage": "de-DE",
+      "publisher": {"@id": "https://www.pinovalab.eu/#organization"}
     },
     {
       "@type": "Product",
-      "name": "TL² PivotPin",
+      "name": "TL² PivotPin SHERA S01",
+      "sku": "shera-s01",
+      "image": "https://www.pinovalab.eu/images/pivotpin-shera-s01.jpg",
       "brand": {"@type": "Brand", "name": "Pinova Lab"},
-      "description": "Pins zur Verbindung von 3D-gedruckten SHERA-/Rapid-Shape-Kunststoffmodellen mit Sockelgips. 100 Stück pro Packung.",
-      "offers": {"@type": "Offer", "price": "19.89", "priceCurrency": "EUR", "availability": "https://schema.org/InStock"}
+      "description": "Pin für 3D-gedruckte Dentalmodelle von SHERA- und Rapid-Shape-Druckern: wird direkt in die Wabenzelle gesteckt und verbindet das Modell mit dem Sockelgips. 100 Stück pro Packung.",
+      "offers": {"@type": "Offer", "url": "https://www.pinovalab.eu/#produkte", "price": "19.89", "priceCurrency": "EUR", "availability": "https://schema.org/InStock", "seller": {"@id": "https://www.pinovalab.eu/#organization"},
+        "priceSpecification": {"@type": "UnitPriceSpecification", "price": "19.89", "priceCurrency": "EUR", "valueAddedTaxIncluded": false}}
+    },
+    {
+      "@type": "Product",
+      "name": "TL² PivotPin SHERA S02",
+      "sku": "shera-s02",
+      "image": "https://www.pinovalab.eu/images/pivotpin-shera-s02.jpg",
+      "brand": {"@type": "Brand", "name": "Pinova Lab"},
+      "description": "Pin für schmale Kiefer mit wenig Platz in der Wabenstruktur: klemmt auf einer Linie der Wabe statt in einer Zelle. 100 Stück pro Packung.",
+      "offers": {"@type": "Offer", "url": "https://www.pinovalab.eu/#produkte", "price": "19.89", "priceCurrency": "EUR", "availability": "https://schema.org/InStock", "seller": {"@id": "https://www.pinovalab.eu/#organization"},
+        "priceSpecification": {"@type": "UnitPriceSpecification", "price": "19.89", "priceCurrency": "EUR", "valueAddedTaxIncluded": false}}
+    },
+    {
+      "@type": "Product",
+      "name": "TL² PivotPin exocad E01",
+      "sku": "exocad-e01",
+      "image": "https://www.pinovalab.eu/images/pivotpin-exocad-e01.jpg",
+      "brand": {"@type": "Brand", "name": "Pinova Lab"},
+      "description": "Pin für in exocad erstellte Dentalmodelle mit Wabenstruktur (vor jedem Auftrag auf 120 % skalieren), mit Klemmfläche für sicheren Halt im Sockelgips. 100 Stück pro Packung.",
+      "offers": {"@type": "Offer", "url": "https://www.pinovalab.eu/#produkte", "price": "18.89", "priceCurrency": "EUR", "availability": "https://schema.org/InStock", "seller": {"@id": "https://www.pinovalab.eu/#organization"},
+        "priceSpecification": {"@type": "UnitPriceSpecification", "price": "18.89", "priceCurrency": "EUR", "valueAddedTaxIncluded": false}}
     }
   ]
 }

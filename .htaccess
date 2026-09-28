@@ -14,4 +14,16 @@
   <FilesMatch "\.html?$">
     Header set Cache-Control "no-cache"
   </FilesMatch>
+  # Schriften ändern sich nie, Bilder, Skripte und Styles selten.
+  <FilesMatch "\.woff2$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(jpe?g|png|webp|svg|css|js)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+</IfModule>
+
+# Textdateien komprimiert ausliefern (schnelleres Laden, auch für Google wichtig).
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml application/xml application/javascript text/javascript application/json image/svg+xml
 </IfModule>
