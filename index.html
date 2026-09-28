@@ -966,7 +966,10 @@
     var form = document.getElementById('sample-form');
     var status = document.getElementById('form-status');
     var button = form.querySelector('button[type="submit"]');
+    var dialog = document.getElementById('muster');
     function zeige(text) { status.textContent = text; status.hidden = false; }
+    // Meldung beim Schließen entfernen, damit sie beim nächsten Öffnen nicht mehr dasteht.
+    if (dialog) dialog.addEventListener('close', function () { status.hidden = true; status.textContent = ''; });
     // Ohne PHP-Server (lokale Vorschau) oder bei Fehlern: fertige Mail im E-Mail-Programm öffnen.
     function perMail(daten, text) {
       var body = 'Labor: ' + daten.labor + '\nE-Mail: ' + daten.email + '\n\n' + (daten.nachricht || '');
@@ -1003,6 +1006,7 @@
           }
           zeige('Danke! Ihre Anfrage ist bei uns angekommen. Wir melden uns per E-Mail.');
           form.reset();
+          setTimeout(function () { if (dialog && dialog.open) dialog.close(); }, 4000);
         })
         .catch(function () { perMail(daten, 'Die Anfrage konnte gerade nicht gesendet werden.'); })
         .then(function () { button.disabled = false; });
