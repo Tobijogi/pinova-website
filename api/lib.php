@@ -198,9 +198,10 @@ function sende_bestellmails(array $b): void
         '',
         'Bei Fragen antworten Sie einfach auf diese E-Mail.',
         '',
+        // Lange Zeile zuletzt: Outlook hängt sonst die folgende Zeile an („zusätzliche Zeilenumbrüche entfernt“).
         'Pinova Lab · Tobias Löw',
-        'Johann-Sebastian-Bach-Str. 4 · 85435 Erding',
         'info@pinovalab.eu',
+        'Johann-Sebastian-Bach-Str. 4 · 85435 Erding',
     ]), $cfg['empfaenger'] ?? 'info@pinovalab.eu');
 }
 

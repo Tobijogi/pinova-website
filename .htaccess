@@ -1,0 +1,9 @@
+# Alle Aufrufe auf https://www.pinovalab.eu leiten (http → https, pinovalab.eu → www).
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+  RewriteRule ^ https://www.pinovalab.eu%{REQUEST_URI} [R=301,L]
+  RewriteCond %{HTTP_HOST} ^pinovalab\.eu$ [NC]
+  RewriteRule ^ https://www.pinovalab.eu%{REQUEST_URI} [R=301,L]
+</IfModule>
