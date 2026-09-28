@@ -7,3 +7,11 @@
   RewriteCond %{HTTP_HOST} ^pinovalab\.eu$ [NC]
   RewriteRule ^ https://www.pinovalab.eu%{REQUEST_URI} [R=301,L]
 </IfModule>
+
+# HTML-Seiten bei jedem Aufruf neu prüfen lassen, damit Änderungen sofort sichtbar sind
+# (ohne diese Angabe halten Browser die Seite nach eigenem Ermessen im Zwischenspeicher).
+<IfModule mod_headers.c>
+  <FilesMatch "\.html?$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
