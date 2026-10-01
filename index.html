@@ -346,6 +346,14 @@
   .field input:focus, .field textarea:focus { outline: 2px solid var(--mint); outline-offset: 1px; }
   .form-note { font-size: .82rem; color: var(--on-slate-soft); }
   .form-status { font-weight: 500; color: var(--mint); }
+  .sample-done { display: grid; gap: 14px; justify-items: start; }
+  .sample-done[hidden], .form[hidden] { display: none; }
+  .sample-done:focus { outline: none; }
+  .sample-done-icon { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: var(--mint); color: #0d1b22; font-size: 1.6rem; font-weight: 700; }
+  .sample-done dl { display: grid; gap: 4px; margin: 4px 0 6px; width: 100%; padding: 14px 16px; border-radius: 8px; background: rgba(255,255,255,.06); border: 1px solid rgba(238,245,246,.18); }
+  .sample-done dt { font-size: .8rem; color: var(--on-slate-soft); }
+  .sample-done dd { margin: 0 0 8px; color: #fff; font-weight: 500; }
+  .sample-done dd:last-child { margin-bottom: 0; }
 
   dialog#muster { border: none; padding: 0; border-radius: 16px; max-width: min(440px, 92vw); background: transparent; margin: auto; }
   dialog#muster::backdrop { background: rgba(10,16,20,.6); backdrop-filter: blur(2px); }
@@ -721,7 +729,7 @@
   <dialog id="muster">
     <div class="sample muster-sample">
       <button type="button" class="dialog-close" data-close-muster aria-label="Schließen">×</button>
-      <div>
+      <div id="muster-intro">
         <h2>Kostenlose Musterpackung anfordern</h2>
         <p>Testen Sie den PivotPin in Ihrem Labor. Wir melden uns persönlich bei Ihnen.</p>
         <p style="margin-top:18px">E-Mail: <a href="mailto:info@pinovalab.eu" style="color:var(--mint)">info@pinovalab.eu</a></p>
@@ -772,6 +780,16 @@
         <button class="btn btn-mint" type="submit">Musterpackung anfordern</button>
         <p class="form-status" id="form-status" role="status" hidden></p>
       </form>
+      <div class="sample-done" id="sample-done" role="status" tabindex="-1" hidden>
+        <span class="sample-done-icon" aria-hidden="true">✓</span>
+        <h2>Vielen Dank – Ihre Anfrage ist angekommen!</h2>
+        <p>Wir haben Ihre Musteranfrage erhalten und kümmern uns persönlich darum. Sie hören in Kürze per E-Mail von uns.</p>
+        <dl>
+          <dt>Gewünschte Muster</dt><dd id="done-pins"></dd>
+          <dt>Lieferung an</dt><dd id="done-adresse"></dd>
+        </dl>
+        <button type="button" class="btn btn-mint" data-close-muster>Schließen</button>
+      </div>
     </div>
   </dialog>
 
@@ -1062,8 +1080,9 @@
     musterDialog.addEventListener('click', function (e) {
       if (e.target === musterDialog) musterDialog.close();
     });
-    var closeBtn = musterDialog.querySelector('[data-close-muster]');
-    if (closeBtn) closeBtn.addEventListener('click', function () { musterDialog.close(); });
+    musterDialog.querySelectorAll('[data-close-muster]').forEach(function (btn) {
+      btn.addEventListener('click', function () { musterDialog.close(); });
+    });
   })();
 </script>
 
@@ -1073,9 +1092,30 @@
     var status = document.getElementById('form-status');
     var button = form.querySelector('button[type="submit"]');
     var dialog = document.getElementById('muster');
+    var intro = document.getElementById('muster-intro');
+    var fertig = document.getElementById('sample-done');
+    var buttonText = button.textContent;
     function zeige(text) { status.textContent = text; status.hidden = false; }
-    // Meldung beim Schließen entfernen, damit sie beim nächsten Öffnen nicht mehr dasteht.
-    if (dialog) dialog.addEventListener('close', function () { status.hidden = true; status.textContent = ''; });
+    // Nach dem Absenden: Formular durch eine Bestätigung ersetzen, die bis zum Schließen stehen bleibt.
+    function bestaetige(daten) {
+      document.getElementById('done-pins').textContent = daten.pins.join(', ');
+      var adresse = document.getElementById('done-adresse');
+      adresse.textContent = '';
+      [daten.labor, daten.ansprechpartner, daten.strasse, daten.plz + ' ' + daten.ort].forEach(function (zeile, i) {
+        if (i) adresse.append(document.createElement('br'));
+        adresse.append(zeile);
+      });
+      intro.hidden = true;
+      form.hidden = true;
+      fertig.hidden = false;
+      fertig.parentNode.scrollTop = 0;
+      fertig.focus();
+    }
+    // Beim Schließen alles zurücksetzen, damit beim nächsten Öffnen wieder das leere Formular dasteht.
+    if (dialog) dialog.addEventListener('close', function () {
+      status.hidden = true; status.textContent = '';
+      if (!fertig.hidden) { form.reset(); fertig.hidden = true; intro.hidden = false; form.hidden = false; }
+    });
     // Ohne PHP-Server (lokale Vorschau) oder bei Fehlern: fertige Mail im E-Mail-Programm öffnen.
     function perMail(daten, text) {
       var body = 'Labor: ' + daten.labor + '\nE-Mail: ' + daten.email + '\nAnsprechperson: ' + daten.ansprechpartner +
@@ -1113,6 +1153,8 @@
         website: document.getElementById('f-website').value
       };
       button.disabled = true;
+      button.textContent = 'Wird gesendet …';
+      status.hidden = true;
       fetch('/api/muster.php', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
@@ -1124,12 +1166,10 @@
             if (res.body.fehler && res.body.fehler.indexOf('Bitte') === 0) { zeige(res.body.fehler); return; }
             throw new Error();
           }
-          zeige('Danke! Ihre Anfrage ist bei uns angekommen. Wir melden uns per E-Mail.');
-          form.reset();
-          setTimeout(function () { if (dialog && dialog.open) dialog.close(); }, 4000);
+          bestaetige(daten);
         })
         .catch(function () { perMail(daten, 'Die Anfrage konnte gerade nicht gesendet werden.'); })
-        .then(function () { button.disabled = false; });
+        .then(function () { button.disabled = false; button.textContent = buttonText; });
     });
   })();
 </script>
