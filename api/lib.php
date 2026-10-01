@@ -147,7 +147,8 @@ function lade_bestellung(string $nummer): ?array
 
 // ---------- E-Mail über das eigene Postfach des Webhosters ----------
 
-function sende_mail(string $an, string $betreff, string $inhalt, string $antwortAn): void
+// Mit $html wird die Mail als multipart/alternative verschickt; $inhalt bleibt die Textfassung.
+function sende_mail(string $an, string $betreff, string $inhalt, string $antwortAn, string $html = ''): void
 {
     $absender = cfg()['absender'] ?? 'info@pinovalab.eu';
     // Zeilenumbrüche aus Kopfzeilen entfernen, damit Formulareingaben keine Header einschleusen.
@@ -160,6 +161,14 @@ function sende_mail(string $an, string $betreff, string $inhalt, string $antwort
         'Content-Type' => 'text/plain; charset=UTF-8',
         'Content-Transfer-Encoding' => '8bit',
     ];
+    if ($html !== '') {
+        $grenze = 'pinova-' . bin2hex(random_bytes(12));
+        $headers['Content-Type'] = 'multipart/alternative; boundary="' . $grenze . '"';
+        unset($headers['Content-Transfer-Encoding']);
+        $teil = fn(string $typ, string $text) => "--$grenze\r\nContent-Type: $typ; charset=UTF-8\r\n"
+            . "Content-Transfer-Encoding: base64\r\n\r\n" . chunk_split(base64_encode($text)) . "\r\n";
+        $inhalt = $teil('text/plain', $inhalt) . $teil('text/html', $html) . "--$grenze--\r\n";
+    }
     if (!mail($an, mb_encode_mimeheader($betreff, 'UTF-8'), $inhalt, $headers, '-f' . $absender)) {
         throw new RuntimeException('E-Mail an ' . $an . ' konnte nicht gesendet werden.');
     }
