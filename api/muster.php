@@ -16,6 +16,13 @@ try {
     $nachricht = text($d['nachricht'] ?? '', 2000);
     if ($labor === '') throw new Kundenfehler('Bitte geben Sie den Namen Ihres Labors ein.');
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) throw new Kundenfehler('Bitte geben Sie eine gültige E-Mail-Adresse ein.');
+    $person = text($d['ansprechpartner'] ?? '', 120);
+    $strasse = text($d['strasse'] ?? '', 120);
+    $plz = text($d['plz'] ?? '', 10);
+    $ort = text($d['ort'] ?? '', 80);
+    if ($person === '') throw new Kundenfehler('Bitte geben Sie eine Ansprechperson an.');
+    if ($strasse === '' || $ort === '') throw new Kundenfehler('Bitte geben Sie die vollständige Lieferadresse an.');
+    if (!preg_match('/^\d{5}$/', $plz)) throw new Kundenfehler('Bitte geben Sie eine gültige deutsche Postleitzahl ein.');
     // Nur bekannte Produkte übernehmen – wie die Checkboxen im Formular (index.html).
     $erlaubt = ['SHERA S01', 'SHERA S02', 'exocad E01', 'Personalisierte Sockelform'];
     $gewaehlt = is_array($d['pins'] ?? null) ? array_filter($d['pins'], 'is_string') : [];
@@ -28,6 +35,13 @@ try {
         "Labor: $labor",
         "E-Mail: $email",
         'Gewünschte Muster: ' . implode(', ', $pins),
+        '',
+        'Lieferadresse:',
+        $labor,
+        $person,
+        $strasse,
+        "$plz $ort",
+        'Deutschland',
         '',
         'Nachricht:',
         $nachricht !== '' ? $nachricht : '–',

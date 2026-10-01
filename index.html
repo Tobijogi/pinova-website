@@ -735,6 +735,25 @@
           <label for="f-mail">E-Mail</label>
           <input id="f-mail" name="email" type="email" autocomplete="email" required>
         </div>
+        <div class="field">
+          <label for="f-person">Ansprechperson</label>
+          <input id="f-person" name="ansprechpartner" autocomplete="name" maxlength="120" required>
+        </div>
+        <div class="field">
+          <label for="f-strasse">Lieferadresse: Straße und Hausnummer</label>
+          <input id="f-strasse" name="strasse" autocomplete="street-address" maxlength="120" required>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="f-plz">PLZ</label>
+            <input id="f-plz" name="plz" autocomplete="postal-code" inputmode="numeric" maxlength="5" required>
+          </div>
+          <div class="field">
+            <label for="f-ort">Ort</label>
+            <input id="f-ort" name="ort" autocomplete="address-level2" maxlength="80" required>
+          </div>
+        </div>
+        <p class="form-note">Versand der Muster derzeit innerhalb Deutschlands.</p>
         <fieldset class="pin-choice" id="f-pins">
           <legend>Welche Pins möchten Sie testen?</legend>
           <label><input type="checkbox" name="pins" value="SHERA S01"> TL² PivotPin SHERA S01 <small>– steckt in der Wabenzelle</small></label>
@@ -985,7 +1004,7 @@
       <h3>3. Schriftarten</h3>
       <p>Die auf dieser Website verwendeten Schriftarten (Poppins und Inter) sind lokal auf unserem Server gespeichert. Beim Aufruf der Seite werden keine Daten an Google oder andere Anbieter übertragen.</p>
       <h3>4. Musteranfrage-Formular</h3>
-      <p>Wenn Sie über das Formular „Kostenlose Musterpackung anfordern" eine Anfrage senden, werden die eingegebenen Daten (Laborname, E-Mail-Adresse, gewünschte Produkte, optionale Nachricht) per E-Mail aus unserem eigenen Postfach bei STRATO an uns übermittelt und ausschließlich zur Bearbeitung Ihrer Anfrage und für den Versand des Musters verwendet (Art. 6 Abs. 1 lit. b DSGVO). Die Daten werden nicht auf dem Webserver gespeichert. Wir löschen die Anfrage, sobald sie erledigt ist und keine gesetzlichen Aufbewahrungspflichten bestehen.</p>
+      <p>Wenn Sie über das Formular „Kostenlose Musterpackung anfordern" eine Anfrage senden, werden die eingegebenen Daten (Laborname, E-Mail-Adresse, Ansprechperson, Lieferadresse, gewünschte Produkte, optionale Nachricht) per E-Mail aus unserem eigenen Postfach bei STRATO an uns übermittelt und ausschließlich zur Bearbeitung Ihrer Anfrage und für den Versand des Musters verwendet (Art. 6 Abs. 1 lit. b DSGVO). Die Daten werden nicht auf dem Webserver gespeichert. Wir löschen die Anfrage, sobald sie erledigt ist und keine gesetzlichen Aufbewahrungspflichten bestehen.</p>
       <h3>5. Warenkorb, Bestellung und Zahlung</h3>
       <p>Der Warenkorb speichert die von Ihnen ausgewählten Produkte und Mengen lokal in Ihrem Browser (localStorage) auf Ihrem Gerät. An uns übertragen werden diese Daten erst, wenn Sie eine Bestellung absenden.</p>
       <p>Für die Bestellung verarbeiten wir die von Ihnen angegebenen Daten (Labor bzw. Praxis, Ansprechperson, E-Mail-Adresse, Liefer- und Rechnungsadresse, optional Telefonnummer und USt-IdNr.) zur Vertragsabwicklung (Art. 6 Abs. 1 lit. b DSGVO) und bewahren Rechnungsdaten im Rahmen der gesetzlichen Aufbewahrungspflichten auf (Art. 6 Abs. 1 lit. c DSGVO).</p>
@@ -1059,7 +1078,8 @@
     if (dialog) dialog.addEventListener('close', function () { status.hidden = true; status.textContent = ''; });
     // Ohne PHP-Server (lokale Vorschau) oder bei Fehlern: fertige Mail im E-Mail-Programm öffnen.
     function perMail(daten, text) {
-      var body = 'Labor: ' + daten.labor + '\nE-Mail: ' + daten.email + '\nGewünschte Muster: ' + daten.pins.join(', ') + '\n\n' + (daten.nachricht || '');
+      var body = 'Labor: ' + daten.labor + '\nE-Mail: ' + daten.email + '\nAnsprechperson: ' + daten.ansprechpartner +
+        '\nLieferadresse: ' + daten.strasse + ', ' + daten.plz + ' ' + daten.ort + '\nGewünschte Muster: ' + daten.pins.join(', ') + '\n\n' + (daten.nachricht || '');
       status.innerHTML = '';
       var link = document.createElement('a');
       link.href = 'mailto:info@pinovalab.eu?subject=' + encodeURIComponent('Musteranfrage – ' + daten.labor) + '&body=' + encodeURIComponent(body);
@@ -1073,11 +1093,21 @@
       var mail = document.getElementById('f-mail');
       if (!lab.value.trim()) { zeige('Bitte geben Sie den Namen Ihres Labors ein.'); lab.focus(); return; }
       if (!mail.validity.valid || !mail.value) { zeige('Bitte geben Sie eine gültige E-Mail-Adresse ein.'); mail.focus(); return; }
+      var person = document.getElementById('f-person'), strasse = document.getElementById('f-strasse'),
+          plz = document.getElementById('f-plz'), ort = document.getElementById('f-ort');
+      if (!person.value.trim()) { zeige('Bitte geben Sie eine Ansprechperson an.'); person.focus(); return; }
+      if (!strasse.value.trim()) { zeige('Bitte geben Sie die vollständige Lieferadresse an.'); strasse.focus(); return; }
+      if (!/^\d{5}$/.test(plz.value.trim())) { zeige('Bitte geben Sie eine gültige deutsche Postleitzahl ein.'); plz.focus(); return; }
+      if (!ort.value.trim()) { zeige('Bitte geben Sie die vollständige Lieferadresse an.'); ort.focus(); return; }
       var pins = Array.prototype.map.call(form.querySelectorAll('input[name="pins"]:checked'), function (b) { return b.value; });
       if (!pins.length) { zeige('Bitte wählen Sie mindestens ein Produkt aus.'); form.querySelector('input[name="pins"]').focus(); return; }
       var daten = {
         labor: lab.value.trim(),
         email: mail.value.trim(),
+        ansprechpartner: person.value.trim(),
+        strasse: strasse.value.trim(),
+        plz: plz.value.trim(),
+        ort: ort.value.trim(),
         pins: pins,
         nachricht: document.getElementById('f-msg').value.trim(),
         website: document.getElementById('f-website').value
