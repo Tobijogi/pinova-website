@@ -16,12 +16,18 @@ try {
     $nachricht = text($d['nachricht'] ?? '', 2000);
     if ($labor === '') throw new Kundenfehler('Bitte geben Sie den Namen Ihres Labors ein.');
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) throw new Kundenfehler('Bitte geben Sie eine gültige E-Mail-Adresse ein.');
+    // Nur bekannte Produkte übernehmen – wie die Checkboxen im Formular (index.html).
+    $erlaubt = ['SHERA S01', 'SHERA S02', 'exocad E01', 'Personalisierte Sockelform'];
+    $gewaehlt = is_array($d['pins'] ?? null) ? array_filter($d['pins'], 'is_string') : [];
+    $pins = array_values(array_intersect($erlaubt, $gewaehlt));
+    if (!$pins) throw new Kundenfehler('Bitte wählen Sie mindestens ein Produkt aus.');
 
-    sende_mail(cfg()['absender'] ?? 'info@pinovalab.eu', "Musteranfrage – $labor", implode("\n", [
+    sende_mail(cfg()['absender'] ?? 'info@pinovalab.eu', "Musteranfrage – $labor (" . implode(', ', $pins) . ')', implode("\n", [
         'Musteranfrage über www.pinovalab.eu (' . date('d.m.Y H:i') . ')',
         '',
         "Labor: $labor",
         "E-Mail: $email",
+        'Gewünschte Muster: ' . implode(', ', $pins),
         '',
         'Nachricht:',
         $nachricht !== '' ? $nachricht : '–',
